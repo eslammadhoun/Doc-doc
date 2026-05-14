@@ -1,14 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_complete_project/core/routing/app_router.dart';
+import 'package:flutter_complete_project/doc_app.dart';
 
 void main() {
-  runApp(App());
-}
-
-class App extends StatelessWidget {
-  const App({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(debugShowCheckedModeBanner: false, home: Scaffold());
-  }
+  runApp(DocApp(appRouter: AppRouter()));
 }
