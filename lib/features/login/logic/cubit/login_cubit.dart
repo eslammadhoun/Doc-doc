@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_complete_project/core/networkingv2/api_error_handler.dart';
 import 'package:flutter_complete_project/core/networkingv2/api_result.dart';
@@ -10,6 +11,9 @@ import 'package:flutter_complete_project/features/login/logic/cubit/login_state.
 class LoginCubit extends Cubit<LoginState> {
   final LoginRepo loginRepo;
   LoginCubit({required this.loginRepo}) : super(const LoginState.initial());
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  final GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
 
   void emitLoginStates({required LoginRequestBody loginRequestBody}) async {
     emit(const LoginState.loading());

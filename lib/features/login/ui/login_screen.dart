@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_complete_project/core/helpers/spacing.dart';
 import 'package:flutter_complete_project/core/theming/colors.dart';
 import 'package:flutter_complete_project/core/theming/styles.dart';
 import 'package:flutter_complete_project/core/widgets/app_text_button.dart';
-import 'package:flutter_complete_project/core/widgets/app_text_form_field.dart';
+import 'package:flutter_complete_project/features/login/data/models/login_request_body.dart';
+import 'package:flutter_complete_project/features/login/logic/cubit/login_cubit.dart';
+import 'package:flutter_complete_project/features/login/ui/widgets/email_and_password.dart';
+import 'package:flutter_complete_project/features/login/ui/widgets/login_bloc_listener.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -14,9 +18,6 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final GlobalKey<FormState> _loginFormKey = GlobalKey<FormState>();
-  bool isObscureText = true;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,81 +37,62 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 verticalSpace(36),
-                Form(
-                  key: _loginFormKey,
-                  child: Column(
-                    children: [
-                      AppTextFormField(hintText: 'Email '),
-                      verticalSpace(18),
-                      AppTextFormField(
-                        hintText: 'Password',
-                        obscureText: isObscureText,
-                        suffixIcon: GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              isObscureText = !isObscureText;
-                            });
-                          },
-                          child: Icon(
-                            isObscureText
-                                ? Icons.visibility_off_outlined
-                                : Icons.visibility_outlined,
-                          ),
-                        ),
+                Column(
+                  children: [
+                    EmailAndPassword(),
+                    Align(
+                      alignment: AlignmentGeometry.centerEnd,
+                      child: Text(
+                        'Forgot Password?',
+                        style: TextStyles.font13RegularBlue,
                       ),
-                      verticalSpace(24),
-                      Align(
-                        alignment: AlignmentGeometry.centerEnd,
-                        child: Text(
-                          'Forgot Password?',
-                          style: TextStyles.font13RegularBlue,
-                        ),
-                      ),
-                      verticalSpace(40),
-                      AppTextButton(
-                        buttonText: 'Login',
-                        textStyle: TextStyles.font16SemiBold,
-                        onPressed: () {},
-                      ),
-                      verticalSpace(24),
-                      RichText(
-                        textAlign: TextAlign.center,
-                        text: TextSpan(
-                          children: [
-                            TextSpan(
-                              text: 'By logging in, you agree to our ',
-                              style: TextStyles.font13RegularGrey,
-                            ),
-                            TextSpan(
-                              text: 'Terms & Conditions',
-                              style: TextStyles.font13RegularDarkBlue,
-                            ),
-                            TextSpan(
-                              text: ' and ',
-                              style: TextStyles.font13RegularGrey,
-                            ),
-                            TextSpan(
-                              text: 'Privacy Policy',
-                              style: TextStyles.font13RegularDarkBlue,
-                            ),
-                          ],
-                        ),
-                      ),
-                      verticalSpace(24),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                    ),
+                    verticalSpace(40),
+                    AppTextButton(
+                      buttonText: 'Login',
+                      textStyle: TextStyles.font16SemiBold,
+                      onPressed: () => validateThenLogin(context),
+                    ),
+                    verticalSpace(24),
+                    RichText(
+                      textAlign: TextAlign.center,
+                      text: TextSpan(
                         children: [
-                          Text(
-                            'Don\'t have an account? ',
-                            style: TextStyles.font13RegularBlue.copyWith(
-                              color: ColorsManager.grey,
-                            ),
+                          TextSpan(
+                            text: 'By logging in, you agree to our ',
+                            style: TextStyles.font13RegularGrey,
                           ),
-                          Text('Sign Up', style: TextStyles.font13RegularBlue),
+                          TextSpan(
+                            text: 'Terms & Conditions',
+                            style: TextStyles.font13RegularDarkBlue,
+                          ),
+                          TextSpan(
+                            text: ' and ',
+                            style: TextStyles.font13RegularGrey,
+                          ),
+                          TextSpan(
+                            text: 'Privacy Policy',
+                            style: TextStyles.font13RegularDarkBlue,
+                          ),
                         ],
                       ),
-                    ],
-                  ),
+                    ),
+                    verticalSpace(24),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Don\'t have an account? ',
+                          style: TextStyles.font13RegularBlue.copyWith(
+                            color: ColorsManager.grey,
+                          ),
+                        ),
+                        Text('Sign Up', style: TextStyles.font13RegularBlue),
+                      ],
+                    ),
+                    verticalSpace(24),
+                    LoginBlocListener(),
+                  ],
                 ),
               ],
             ),
@@ -118,5 +100,16 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
+  }
+
+  void validateThenLogin(BuildContext context) {
+    if (context.read<LoginCubit>().loginFormKey.currentState!.validate()) {
+      context.read<LoginCubit>().emitLoginStates(
+        loginRequestBody: LoginRequestBody(
+          email: context.read<LoginCubit>().emailController.text,
+          password: context.read<LoginCubit>().passwordController.text,
+        ),
+      );
+    }
   }
 }
