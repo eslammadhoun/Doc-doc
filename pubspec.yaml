@@ -41,17 +41,14 @@ dependencies:
   get_it: ^9.2.1
 
   # Code Generator (mainly used with Cubit & retrofit)
-  freezed: ^3.2.5
   freezed_annotation: ^3.1.0
 
   # Automatically Generate code for converting to and from json by annotating Dart Classes
-  json_serializable: ^6.13.2
   json_annotation: ^4.11.0
 
   # HTTP Networking
   dio: ^5.9.2
   retrofit: ^4.9.2
-  retrofit_generator: ^10.2.6
   pretty_dio_logger: ^1.4.0
 
   # Localization
@@ -80,7 +77,10 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^6.0.0
-
+  build_runner: ^2.15.0
+  freezed: ^3.2.5
+  json_serializable: ^6.13.2
+  retrofit_generator: ^10.2.6
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
