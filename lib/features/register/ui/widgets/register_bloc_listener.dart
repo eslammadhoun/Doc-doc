@@ -3,39 +3,42 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_complete_project/core/helpers/extensions.dart';
 import 'package:flutter_complete_project/core/routing/routes.dart';
 import 'package:flutter_complete_project/core/theming/colors.dart';
-import 'package:flutter_complete_project/features/login/logic/cubit/login_cubit.dart';
-import 'package:flutter_complete_project/features/login/logic/cubit/login_state.dart';
+import 'package:flutter_complete_project/features/register/logic/cubit/register_cubit.dart';
+import 'package:flutter_complete_project/features/register/logic/cubit/register_state.dart';
 
-class LoginBlocListener extends StatelessWidget {
-  const LoginBlocListener({super.key});
+class RegisterBlocListener extends StatelessWidget {
+  const RegisterBlocListener({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<LoginCubit, LoginState>(
+    return BlocListener<RegisterCubit, RegisterState>(
       listenWhen: (previous, current) =>
           current is Loading || current is Success || current is Error,
+
       listener: (context, state) {
         state.whenOrNull(
           loading: () => showDialog(
             context: context,
             builder: (context) => Center(
-              child: const CircularProgressIndicator(
-                color: ColorsManager.darkBlue,
-              ),
+              child: CircularProgressIndicator(color: ColorsManager.darkBlue),
             ),
           ),
-          success: (loginResponse) {
+          success: (registerResponse) {
             context.pop();
             context.pushReplacementNamed(Routes.homeScreen);
             ScaffoldMessenger.of(
               context,
-            ).showSnackBar(SnackBar(content: Text(loginResponse.message)));
+            ).showSnackBar(SnackBar(content: Text(registerResponse.message)));
           },
-          error: (message) {
+          error: (apiErrorModel) {
             context.pop();
-            ScaffoldMessenger.of(
-              context,
-            ).showSnackBar(SnackBar(content: Text(message)));
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(
+                  '${apiErrorModel.message}\n${apiErrorModel.data?.values.map((e) => e.first) ?? ''}',
+                ),
+              ),
+            );
           },
         );
       },

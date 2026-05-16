@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_complete_project/core/helpers/spacing.dart';
 import 'package:flutter_complete_project/core/widgets/app_text_form_field.dart';
-import 'package:flutter_complete_project/features/login/logic/cubit/login_cubit.dart';
 import 'package:flutter_complete_project/core/widgets/password_validations.dart';
+import 'package:flutter_complete_project/features/register/logic/cubit/register_cubit.dart';
 
-class EmailAndPassword extends StatefulWidget {
-  const EmailAndPassword({super.key});
+class RegisterForm extends StatefulWidget {
+  const RegisterForm({super.key});
 
   @override
-  State<EmailAndPassword> createState() => _EmailAndPasswordState();
+  State<RegisterForm> createState() => _RegisterFormState();
 }
 
-class _EmailAndPasswordState extends State<EmailAndPassword> {
+class _RegisterFormState extends State<RegisterForm> {
   bool isObscureText = true;
   bool hasLowercase = false;
   bool hasUppercase = false;
@@ -20,13 +20,19 @@ class _EmailAndPasswordState extends State<EmailAndPassword> {
   bool hasSpecialCharacters = false;
   bool hasMinLength = false;
 
+  late TextEditingController nameController;
   late TextEditingController emailController;
   late TextEditingController passwordController;
+  late TextEditingController phoneController;
+  late TextEditingController genderController;
 
   @override
   void initState() {
-    emailController = context.read<LoginCubit>().emailController;
-    passwordController = context.read<LoginCubit>().passwordController;
+    emailController = context.read<RegisterCubit>().emailController;
+    passwordController = context.read<RegisterCubit>().passwordController;
+    nameController = context.read<RegisterCubit>().nameController;
+    phoneController = context.read<RegisterCubit>().phoneController;
+    genderController = context.read<RegisterCubit>().genderController;
     setupPasswordListener();
     super.initState();
   }
@@ -49,9 +55,20 @@ class _EmailAndPasswordState extends State<EmailAndPassword> {
   @override
   Widget build(BuildContext context) {
     return Form(
-      key: context.read<LoginCubit>().loginFormKey,
+      key: context.read<RegisterCubit>().registerFormKey,
       child: Column(
         children: [
+          AppTextFormField(
+            hintText: 'Name',
+            controller: nameController,
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter your name';
+              }
+              return null;
+            },
+          ),
+          verticalSpace(12),
           AppTextFormField(
             hintText: 'Email',
             controller: emailController,
@@ -67,12 +84,12 @@ class _EmailAndPasswordState extends State<EmailAndPassword> {
               return null;
             },
           ),
-          verticalSpace(18),
+          verticalSpace(12),
           AppTextFormField(
             controller: passwordController,
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return 'Please enter your email';
+                return 'Please enter your password';
               }
             },
             hintText: 'Password ',
@@ -90,6 +107,28 @@ class _EmailAndPasswordState extends State<EmailAndPassword> {
               ),
             ),
           ),
+          verticalSpace(12),
+          AppTextFormField(
+            hintText: 'Phone',
+            controller: phoneController,
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter your phone number';
+              }
+              return null;
+            },
+          ),
+          verticalSpace(12),
+          AppTextFormField(
+            hintText: 'Gender',
+            controller: genderController,
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter your gender';
+              }
+              return null;
+            },
+          ),
           verticalSpace(24),
           PasswordValidations(
             hasLowercase: hasLowercase,
@@ -105,8 +144,11 @@ class _EmailAndPasswordState extends State<EmailAndPassword> {
 
   @override
   void dispose() {
+    nameController.dispose();
     emailController.dispose();
     passwordController.dispose();
+    phoneController.dispose();
+    genderController.dispose();
     super.dispose();
   }
 }
