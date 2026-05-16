@@ -6,20 +6,20 @@ import 'package:flutter_complete_project/core/routing/routes.dart';
 import 'package:flutter_complete_project/core/theming/colors.dart';
 import 'package:flutter_complete_project/core/theming/styles.dart';
 import 'package:flutter_complete_project/core/widgets/app_text_button.dart';
-import 'package:flutter_complete_project/features/login/data/models/login_request_body.dart';
-import 'package:flutter_complete_project/features/login/logic/cubit/login_cubit.dart';
-import 'package:flutter_complete_project/features/login/ui/widgets/email_and_password.dart';
-import 'package:flutter_complete_project/features/login/ui/widgets/login_bloc_listener.dart';
+import 'package:flutter_complete_project/features/register/data/models/register_request_body.dart';
+import 'package:flutter_complete_project/features/register/ui/widgets/register_bloc_listener.dart';
+import 'package:flutter_complete_project/features/register/logic/cubit/register_cubit.dart';
+import 'package:flutter_complete_project/features/register/ui/widgets/register_form.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,10 +30,10 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Welcome Back', style: TextStyles.font24BoldBlue),
+                Text('Create Account', style: TextStyles.font24BoldBlue),
                 verticalSpace(8),
                 Text(
-                  'We\'re excited to have you back, can\'t wait to see what you\'ve been up to since you last logged in.',
+                  'Sign up now and start exploring all that our app has to offer. We\'re excited to welcome you to our community!',
                   style: TextStyles.font14Regular.copyWith(
                     color: ColorsManager.grey,
                   ),
@@ -41,7 +41,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 verticalSpace(36),
                 Column(
                   children: [
-                    EmailAndPassword(),
+                    RegisterForm(),
                     Align(
                       alignment: AlignmentGeometry.centerEnd,
                       child: Text(
@@ -51,9 +51,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     verticalSpace(40),
                     AppTextButton(
-                      buttonText: 'Login',
+                      buttonText: 'Register',
                       textStyle: TextStyles.font16SemiBold,
-                      onPressed: () => validateThenLogin(context),
+                      onPressed: () => validateThenRegister(context),
                     ),
                     verticalSpace(24),
                     RichText(
@@ -61,7 +61,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       text: TextSpan(
                         children: [
                           TextSpan(
-                            text: 'By logging in, you agree to our ',
+                            text: 'By registering, you agree to our ',
                             style: TextStyles.font13RegularGrey,
                           ),
                           TextSpan(
@@ -84,22 +84,22 @@ class _LoginScreenState extends State<LoginScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'Don\'t have an account? ',
+                          'Already have an account? ',
                           style: TextStyles.font13RegularBlue.copyWith(
                             color: ColorsManager.grey,
                           ),
                         ),
                         InkWell(
-                          onTap: () => context.pushNamed(Routes.registerScreen),
+                          onTap: () => context.pushNamed(Routes.loginScreen),
                           child: Text(
-                            'Sign Up',
+                            'Login',
                             style: TextStyles.font13RegularBlue,
                           ),
                         ),
                       ],
                     ),
                     verticalSpace(24),
-                    LoginBlocListener(),
+                    RegisterBlocListener(),
                   ],
                 ),
               ],
@@ -110,12 +110,19 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  void validateThenLogin(BuildContext context) {
-    if (context.read<LoginCubit>().loginFormKey.currentState!.validate()) {
-      context.read<LoginCubit>().emitLoginStates(
-        loginRequestBody: LoginRequestBody(
-          email: context.read<LoginCubit>().emailController.text,
-          password: context.read<LoginCubit>().passwordController.text,
+  void validateThenRegister(BuildContext context) {
+    if (context
+        .read<RegisterCubit>()
+        .registerFormKey
+        .currentState!
+        .validate()) {
+      context.read<RegisterCubit>().emitRegisterStates(
+        registerRequestBody: RegisterRequestBody(
+          name: context.read<RegisterCubit>().nameController.text,
+          email: context.read<RegisterCubit>().emailController.text,
+          password: context.read<RegisterCubit>().passwordController.text,
+          phone: context.read<RegisterCubit>().phoneController.text,
+          gender: context.read<RegisterCubit>().genderController.text,
         ),
       );
     }

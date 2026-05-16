@@ -19,6 +19,12 @@ extension Navigation on BuildContext {
     ).pushReplacement(MaterialPageRoute(builder: (context) => page));
   }
 
+  Future<dynamic> pushReplacementNamed(String routeName, {Object? argumants}) {
+    return Navigator.of(
+      this,
+    ).pushReplacementNamed(routeName, arguments: argumants);
+  }
+
   Future<dynamic> pushNamedAndRemoveUntil(
     String routeName, {
     Object? argumants,
