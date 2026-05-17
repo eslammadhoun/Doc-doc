@@ -5,9 +5,10 @@
             "name": "Development",
             "type": "dart",
             "request": "launch",
-            "flutterMode": "debug",
+            "program": "main/main_development.dart",
             "args": [
-                "--flavor=development",
+                "--flavor",
+                "development",
                 "-t",
                 "lib/main_development.dart"
             ]
@@ -16,9 +17,10 @@
             "name": "Production",
             "type": "dart",
             "request": "launch",
-            "flutterMode": "debug",
+            "program": "main/main_production.dart",
             "args": [
-                "--flavor=production",
+                "--flavor",
+                "production",
                 "-t",
                 "lib/main_production.dart"
             ]

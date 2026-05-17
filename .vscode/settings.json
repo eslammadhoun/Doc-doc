@@ -1,8 +1,0 @@
-{
-    "dart.flutterRunAdditionalArgs": [
-        "--flavor",
-        "development",
-        "-t",
-        "lib/main_development.dart"
-    ]
-}
