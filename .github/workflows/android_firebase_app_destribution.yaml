@@ -60,7 +60,7 @@ jobs:
       # Build & Distribute
       - name: Firebase App Distribution
         env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_CLI_TOKEN }}
+          FIREBASE_CLI_TOKEN: ${{ secrets.FIREBASE_CLI_TOKEN }}
         run: |
-          cd android
-          bundle exec fastlane firebase_distribution
+          bundle exec fastlane android firebase_distribution
+        working-directory: android
