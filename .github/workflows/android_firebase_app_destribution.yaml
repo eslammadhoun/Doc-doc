@@ -1,0 +1,66 @@
+name: Android Development Distribution
+
+on:
+  push:
+    branches:
+      - development
+
+jobs:
+  distribute-android:
+    name: Build & Distribute Android
+    runs-on: macos-latest
+
+    steps:
+      # Clone repository
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      # Setup Java
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      # Setup Flutter
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: 3.32.0
+          cache: true
+
+      # Install dependencies
+      - name: Install Flutter Dependencies
+        run: flutter pub get
+
+      # Decode google-services.json
+      - name: Setup Firebase Config
+        run: |
+          mkdir -p android/app/src/production
+          echo "${{ secrets.GOOGLE_SERVICES_JSON }}" | base64 --decode > android/app/src/production/google-services.json
+
+      # Create .env if needed
+      # - name: Create Env File
+      #   run: |
+      #     echo "API_BASE_URL=${{ secrets.API_BASE_URL }}" >> .env
+
+      # Setup Ruby
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.3
+          bundler-cache: true
+
+      # Install Fastlane
+      - name: Install Fastlane
+        run: |
+          cd android
+          bundle install
+
+      # Build & Distribute
+      - name: Firebase App Distribution
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_CLI_TOKEN }}
+        run: |
+          cd android
+          bundle exec fastlane firebase_distribution
