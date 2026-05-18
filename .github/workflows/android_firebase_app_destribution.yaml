@@ -33,12 +33,6 @@ jobs:
       - name: Install Flutter Dependencies
         run: flutter pub get
 
-      # Decode google-services.json
-      - name: Setup Firebase Config
-        run: |
-          mkdir -p android/app/src/production
-          echo "${{ secrets.GOOGLE_SERVICES_JSON }}" | base64 --decode > android/app/src/production/google-services.json
-
       # Create .env if needed
       # - name: Create Env File
       #   run: |
