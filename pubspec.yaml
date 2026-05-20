@@ -67,6 +67,7 @@ dependencies:
   # For Building Responseve App
   flutter_screenutil: ^5.9.3
   firebase_core: ^4.9.0
+  rename: ^3.1.0
 
 dev_dependencies:
   flutter_test:
