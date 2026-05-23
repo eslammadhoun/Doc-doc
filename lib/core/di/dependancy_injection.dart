@@ -1,6 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_complete_project/core/networkingv2/api_service.dart';
 import 'package:flutter_complete_project/core/networkingv2/dio_factory.dart';
+import 'package:flutter_complete_project/features/home/data/apis/home_api_service.dart';
+import 'package:flutter_complete_project/features/home/data/repos/home_repo.dart';
+import 'package:flutter_complete_project/features/home/ui/logic/home_cubit.dart';
 import 'package:flutter_complete_project/features/login/data/repos/login_repo.dart';
 import 'package:flutter_complete_project/features/login/logic/cubit/login_cubit.dart';
 import 'package:flutter_complete_project/features/register/data/repos/register_repo.dart';
@@ -23,4 +26,11 @@ Future<void> setupDI() async {
   sl.registerFactory<RegisterCubit>(
     () => RegisterCubit(registerRepo: sl<RegisterRepo>()),
   );
+
+  // Home Feature
+  sl.registerLazySingleton<HomeApiService>(() => HomeApiService(dio));
+  sl.registerLazySingleton<HomeRepo>(
+    () => HomeRepo(homeApiService: sl<HomeApiService>()),
+  );
+  sl.registerFactory<HomeCubit>(() => HomeCubit(homeRepo: sl<HomeRepo>()));
 }
