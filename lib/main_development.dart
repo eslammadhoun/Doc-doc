@@ -6,9 +6,9 @@ import 'package:flutter_complete_project/doc_app.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await ScreenUtil.ensureScreenSize();
   await Firebase.initializeApp();
-  WidgetsFlutterBinding.ensureInitialized();
   await setupDI();
   runApp(DocApp(appRouter: AppRouter()));
 }

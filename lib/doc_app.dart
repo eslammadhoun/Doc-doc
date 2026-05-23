@@ -22,7 +22,7 @@ class DocApp extends StatelessWidget {
           scaffoldBackgroundColor: Colors.white,
         ),
         onGenerateRoute: AppRouter.generateRoute,
-        initialRoute: Routes.onBoardingScreen,
+        initialRoute: Routes.homeScreen,
       ),
     );
   }
