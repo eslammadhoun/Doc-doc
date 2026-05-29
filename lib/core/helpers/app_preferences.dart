@@ -53,7 +53,7 @@ class AppPreferences {
     debugPrint(
       'Flutter Secure Storage: set secured string with key: $key and value of: $value',
     );
-    flutterSecureStorage.write(key: key, value: value);
+    await flutterSecureStorage.write(key: key, value: value);
   }
 
   /// Gets an String Value from flutter secure storage with given [key]
