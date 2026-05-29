@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_complete_project/core/helpers/app_preferences.dart';
+import 'package:flutter_complete_project/core/helpers/constants.dart';
 import 'package:flutter_complete_project/core/networkingv2/api_error_handler.dart';
 import 'package:flutter_complete_project/core/networkingv2/api_result.dart';
 import 'package:flutter_complete_project/features/login/data/models/login_request_body.dart';
@@ -21,10 +23,17 @@ class LoginCubit extends Cubit<LoginState> {
       loginRequestBody: loginRequestBody,
     );
     loginResponse.when(
-      success: (LoginResponse loginResponse) =>
-          emit(LoginState.success(loginResponse)),
+      success: (LoginResponse loginResponse) {
+        secureUserToken(loginResponse.userData?.token ?? '');
+        emit(LoginState.success(loginResponse));
+      },
       failure: (ErrorHandler error) =>
           emit(LoginState.error(error.apiErrorModel.message ?? 'Login Error')),
     );
+  }
+
+  // Safe User Token in Sharedprferences
+  Future<void> secureUserToken(String token) async {
+    await AppPreferences.setSecureString(Constants.userToken, token);
   }
 }

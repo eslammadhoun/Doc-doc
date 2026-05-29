@@ -1,4 +1,6 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_complete_project/core/helpers/app_preferences.dart';
+import 'package:flutter_complete_project/core/helpers/constants.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 class DioFactory {
@@ -20,11 +22,13 @@ class DioFactory {
     return dio!;
   }
 
-  static void addDioHeaders() {
+  static void addDioHeaders() async {
+    final String userToken = await AppPreferences.getSecuredString(
+      Constants.userToken,
+    );
     dio?.options.headers = {
       "Accept": 'application/json',
-      "Authorization":
-          "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL3ZjYXJlLmludGVncmF0aW9uMjUuY29tL2FwaS9hdXRoL2xvZ2luIiwiaWF0IjoxNzc5MzcyNzUxLCJleHAiOjE3Nzk0NTkxNTEsIm5iZiI6MTc3OTM3Mjc1MSwianRpIjoiM3dsQUVYMmpiQzlDQWt4dyIsInN1YiI6IjcwMjEiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.MNFdBu5c0SDUTzKAArqyJ_SvhA2Hnw6jkYnEvHr1lLs",
+      "Authorization": "Bearer $userToken",
     };
   }
 
