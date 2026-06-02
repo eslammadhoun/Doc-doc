@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_complete_project/core/helpers/spacing.dart';
 import 'package:flutter_complete_project/core/theming/styles.dart';
+import 'package:flutter_complete_project/core/widgets/image_widget.dart';
 import 'package:flutter_complete_project/features/home/data/models/specializations_response_model.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:flutter_complete_project/core/theming/colors.dart';
 
 class DoctorWidget extends StatelessWidget {
   final DoctorModel doctorModel;
@@ -23,14 +23,10 @@ class DoctorWidget extends StatelessWidget {
             width: 110.w,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12.r),
-              color: ColorsManager.darkBlue,
             ),
             child: ClipRRect(
               borderRadius: BorderRadiusGeometry.circular(12.r),
-              child: Image.asset(
-                'assets/images/doctor_1.png',
-                fit: BoxFit.cover,
-              ),
+              child: imageWidget(doctorModel.photo ?? ''),
             ),
           ),
           horizontalSpace(16.w),

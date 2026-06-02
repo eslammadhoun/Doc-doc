@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_complete_project/core/helpers/extensions.dart';
 import 'package:flutter_complete_project/core/helpers/spacing.dart';
+import 'package:flutter_complete_project/core/routing/routes.dart';
 import 'package:flutter_complete_project/core/theming/colors.dart';
 import 'package:flutter_complete_project/core/theming/styles.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -22,7 +24,7 @@ class HomeTopBar extends StatelessWidget {
           ],
         ),
         InkWell(
-          onTap: () => print('Tap!!!'),
+          onTap: () => context.pushNamed(Routes.notificationsPage),
           child: Container(
             width: 48.w,
             height: 48.h,
