@@ -33,11 +33,7 @@ class RegisterBlocListener extends StatelessWidget {
           error: (apiErrorModel) {
             context.pop();
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(
-                  '${apiErrorModel.message}\n${apiErrorModel.data?.values.map((e) => e.first) ?? ''}',
-                ),
-              ),
+              SnackBar(content: Text(apiErrorModel.getAllMessages())),
             );
           },
         );

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_complete_project/core/helpers/app_preferences.dart';
 import 'package:flutter_complete_project/core/helpers/constants.dart';
-import 'package:flutter_complete_project/core/networkingv2/api_error_handler.dart';
+import 'package:flutter_complete_project/core/networkingv2/api_error_model.dart';
 import 'package:flutter_complete_project/core/networkingv2/dio_factory.dart';
 import 'package:flutter_complete_project/core/networkingv2/api_result.dart';
 import 'package:flutter_complete_project/features/login/data/models/login_request_body.dart';
@@ -30,8 +30,7 @@ class LoginCubit extends Cubit<LoginState> {
         DioFactory.setTokenIntoHeadersAfterLogin(token);
         emit(LoginState.success(loginResponse));
       },
-      failure: (ErrorHandler error) =>
-          emit(LoginState.error(error.apiErrorModel.message ?? 'Login Error')),
+      failure: (ApiErrorModel error) => emit(LoginState.error(error)),
     );
   }
 

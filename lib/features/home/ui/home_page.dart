@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_complete_project/core/helpers/spacing.dart';
+import 'package:flutter_complete_project/core/theming/colors.dart';
 import 'package:flutter_complete_project/core/theming/styles.dart';
 import 'package:flutter_complete_project/features/home/data/models/specializations_response_model.dart';
 import 'package:flutter_complete_project/features/home/ui/logic/home_cubit.dart';
 import 'package:flutter_complete_project/features/home/ui/logic/home_state.dart';
-import 'package:flutter_complete_project/features/home/ui/widgets/doctor_widget.dart';
-import 'package:flutter_complete_project/features/home/ui/widgets/doctors_blue_container.dart';
-import 'package:flutter_complete_project/features/home/ui/widgets/doctors_speciality.dart';
-import 'package:flutter_complete_project/features/home/ui/widgets/home_top_bar.dart';
+import 'package:flutter_complete_project/features/home/ui/widgets/home_page_widgets/doctor_widget.dart';
+import 'package:flutter_complete_project/features/home/ui/widgets/home_page_widgets/doctors_blue_container.dart';
+import 'package:flutter_complete_project/features/home/ui/widgets/home_page_widgets/doctors_speciality.dart';
+import 'package:flutter_complete_project/features/home/ui/widgets/home_page_widgets/home_top_bar.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -31,8 +32,11 @@ class HomePage extends StatelessWidget {
                       current is Error,
                   builder: (context, state) {
                     return state.maybeWhen(
-                      loading: () =>
-                          const Center(child: CircularProgressIndicator()),
+                      loading: () => Center(
+                        child: CircularProgressIndicator(
+                          color: ColorsManager.mainBlue,
+                        ),
+                      ),
                       success: (data) {
                         final SpecializationsResponseModel
                         specializationsResponseModel = data;
@@ -55,9 +59,8 @@ class HomePage extends StatelessWidget {
                           ],
                         );
                       },
-                      error: (error) => Center(
-                        child: Text(error.apiErrorModel.message ?? 'Error'),
-                      ),
+                      error: (error) =>
+                          Center(child: Text(error.message ?? 'Error')),
                       orElse: () => const SizedBox.shrink(),
                     );
                   },

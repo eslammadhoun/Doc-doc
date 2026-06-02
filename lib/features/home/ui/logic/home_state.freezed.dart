@@ -128,7 +128,7 @@ return error(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function( SpecializationsResponseModel response)?  success,TResult Function( ErrorHandler error)?  error,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function( SpecializationsResponseModel response)?  success,TResult Function( ApiErrorModel error)?  error,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial();case Loading() when loading != null:
@@ -152,7 +152,7 @@ return error(_that.error);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function( SpecializationsResponseModel response)  success,required TResult Function( ErrorHandler error)  error,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function( SpecializationsResponseModel response)  success,required TResult Function( ApiErrorModel error)  error,}) {final _that = this;
 switch (_that) {
 case _Initial():
 return initial();case Loading():
@@ -175,7 +175,7 @@ return error(_that.error);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function( SpecializationsResponseModel response)?  success,TResult? Function( ErrorHandler error)?  error,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function( SpecializationsResponseModel response)?  success,TResult? Function( ApiErrorModel error)?  error,}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial();case Loading() when loading != null:
@@ -326,7 +326,7 @@ class Error<SpecializationsResponseModel> implements HomeState<SpecializationsRe
   const Error(this.error);
   
 
- final  ErrorHandler error;
+ final  ApiErrorModel error;
 
 /// Create a copy of HomeState
 /// with the given fields replaced by the non-null parameter values.
@@ -358,7 +358,7 @@ abstract mixin class $ErrorCopyWith<SpecializationsResponseModel,$Res> implement
   factory $ErrorCopyWith(Error<SpecializationsResponseModel> value, $Res Function(Error<SpecializationsResponseModel>) _then) = _$ErrorCopyWithImpl;
 @useResult
 $Res call({
- ErrorHandler error
+ ApiErrorModel error
 });
 
 
@@ -378,7 +378,7 @@ class _$ErrorCopyWithImpl<SpecializationsResponseModel,$Res>
 @pragma('vm:prefer-inline') $Res call({Object? error = null,}) {
   return _then(Error<SpecializationsResponseModel>(
 null == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
-as ErrorHandler,
+as ApiErrorModel,
   ));
 }
 

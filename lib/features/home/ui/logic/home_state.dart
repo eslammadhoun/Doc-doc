@@ -1,4 +1,4 @@
-import 'package:flutter_complete_project/core/networkingv2/api_error_handler.dart';
+import 'package:flutter_complete_project/core/networkingv2/api_error_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 part 'home_state.freezed.dart';
 
@@ -9,5 +9,5 @@ class HomeState<SpecializationsResponseModel>
   const factory HomeState.loading() = Loading;
   const factory HomeState.success(SpecializationsResponseModel response) =
       Success<SpecializationsResponseModel>;
-  const factory HomeState.error(ErrorHandler error) = Error;
+  const factory HomeState.error(ApiErrorModel error) = Error;
 }

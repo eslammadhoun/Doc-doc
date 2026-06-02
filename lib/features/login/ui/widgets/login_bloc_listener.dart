@@ -31,11 +31,11 @@ class LoginBlocListener extends StatelessWidget {
               context,
             ).showSnackBar(SnackBar(content: Text(loginResponse.message)));
           },
-          error: (message) {
+          error: (error) {
             context.pop();
             ScaffoldMessenger.of(
               context,
-            ).showSnackBar(SnackBar(content: Text(message)));
+            ).showSnackBar(SnackBar(content: Text(error.getAllMessages())));
           },
         );
       },
