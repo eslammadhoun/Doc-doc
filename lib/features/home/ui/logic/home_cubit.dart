@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_complete_project/core/networkingv2/api_error_handler.dart';
+import 'package:flutter_complete_project/core/networkingv2/api_error_model.dart';
 import 'package:flutter_complete_project/core/networkingv2/api_result.dart';
 import 'package:flutter_complete_project/features/home/data/models/specializations_response_model.dart';
 import 'package:flutter_complete_project/features/home/data/repos/home_repo.dart';
@@ -16,7 +16,7 @@ class HomeCubit extends Cubit<HomeState> {
     getHomeDataResult.when(
       success: (SpecializationsResponseModel response) =>
           emit(HomeState.success(response)),
-      failure: (ErrorHandler error) => emit(HomeState.error(error)),
+      failure: (ApiErrorModel error) => emit(HomeState.error(error)),
     );
   }
 }

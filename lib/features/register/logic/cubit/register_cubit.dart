@@ -35,8 +35,7 @@ class RegisterCubit extends Cubit<RegisterState> {
         DioFactory.setTokenIntoHeadersAfterLogin(token);
         emit(RegisterState.success(registerResponse));
       },
-      failure: (errorModel) =>
-          emit(RegisterState.error(errorModel.apiErrorModel)),
+      failure: (errorModel) => emit(RegisterState.error(errorModel)),
     );
   }
 

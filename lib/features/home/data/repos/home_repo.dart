@@ -12,9 +12,8 @@ class HomeRepo {
       final SpecializationsResponseModel response = await homeApiService
           .getHomeData();
       return ApiResult.success(response);
-    } catch (e) {
-      print('HomeRepo error: $e');
-      return ApiResult.failure(ErrorHandler.handle(e));
+    } catch (error) {
+      return ApiResult.failure(ErrorHandler.handle(error));
     }
   }
 }
