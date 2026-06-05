@@ -5,13 +5,20 @@ import 'package:flutter_complete_project/core/routing/routes.dart';
 import 'package:flutter_complete_project/features/home/data/repos/home_repo.dart';
 import 'package:flutter_complete_project/features/home/ui/home_page.dart';
 import 'package:flutter_complete_project/features/home/ui/logic/home_cubit.dart';
-import 'package:flutter_complete_project/features/login/logic/cubit/login_cubit.dart';
-import 'package:flutter_complete_project/features/login/ui/login_screen.dart';
-import 'package:flutter_complete_project/features/onboadring/onboarding_screen.dart';
-import 'package:flutter_complete_project/features/register/logic/cubit/register_cubit.dart';
-import 'package:flutter_complete_project/features/register/ui/register_screen.dart';
+import 'package:flutter_complete_project/features/book_appointment/ui/book_appointment_screen.dart';
+import 'package:flutter_complete_project/features/book_appointment/ui/logic/book_appointment_cubit.dart';
+import 'package:flutter_complete_project/features/home/ui/logic/nearby_doctors_cubit.dart';
+import 'package:flutter_complete_project/features/home/ui/nearby_doctors_screen.dart';
+import 'package:flutter_complete_project/features/home/ui/notifications_page.dart';
+import 'package:flutter_complete_project/features/auth/login/logic/cubit/login_cubit.dart';
+import 'package:flutter_complete_project/features/auth/login/ui/login_screen.dart';
+import 'package:flutter_complete_project/features/onboarding/onboarding_screen.dart';
+import 'package:flutter_complete_project/features/auth/register/logic/cubit/register_cubit.dart';
+import 'package:flutter_complete_project/features/auth/register/ui/register_screen.dart';
 
 class AppRouter {
+  static GlobalKey<NavigatorState> globalNavigatorKey =
+      GlobalKey<NavigatorState>();
   static Route generateRoute(RouteSettings route) {
     final _ = route.arguments;
 
@@ -40,6 +47,24 @@ class AppRouter {
             create: (context) =>
                 HomeCubit(homeRepo: sl<HomeRepo>())..getHomeData(),
             child: const HomePage(),
+          ),
+        );
+      case Routes.notificationsPage:
+        return MaterialPageRoute(
+          builder: (BuildContext context) => NotificationsPage(),
+        );
+      case Routes.bookAppointmentScreen:
+        return MaterialPageRoute(
+          builder: (context) => BlocProvider<BookAppointmentCubit>(
+            create: (context) => sl<BookAppointmentCubit>(),
+            child: const BookAppointmentScreen(),
+          ),
+        );
+      case Routes.nearbyDoctorsScreen:
+        return MaterialPageRoute(
+          builder: (context) => BlocProvider<NearbyDoctorsCubit>(
+            create: (context) => sl<NearbyDoctorsCubit>()..getNearbyDoctors(),
+            child: const NearbyDoctorsScreen(),
           ),
         );
       default:

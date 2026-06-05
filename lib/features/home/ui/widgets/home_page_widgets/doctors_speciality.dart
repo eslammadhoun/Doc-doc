@@ -23,12 +23,12 @@ class DoctorSpeciality extends StatelessWidget {
             Text('See All', style: TextStyles.font12RegularBlue),
           ],
         ),
-        verticalSpace(16.h),
+        verticalSpace(16),
         SizedBox(
           height: 86.h,
           child: ListView.separated(
             scrollDirection: Axis.horizontal,
-            separatorBuilder: (context, index) => horizontalSpace(16.w),
+            separatorBuilder: (context, index) => horizontalSpace(16),
             itemCount: speciality.length,
             itemBuilder: (context, index) => SizedBox(
               width: 73.w,

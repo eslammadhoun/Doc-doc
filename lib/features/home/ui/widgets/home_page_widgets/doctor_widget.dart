@@ -14,22 +14,19 @@ class DoctorWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(bottom: 12.h),
-      padding: const EdgeInsets.all(8),
-      width: 343.w,
-      height: 126.h,
+      padding: EdgeInsets.all(8.r),
+      width: double.infinity,
       child: Row(
         children: [
-          Container(
+          SizedBox(
             width: 110.w,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12.r),
-            ),
+            height: 110.h,
             child: ClipRRect(
-              borderRadius: BorderRadiusGeometry.circular(12.r),
-              child: imageWidget(doctorModel.photo ?? ''),
+              borderRadius: BorderRadius.circular(12.r),
+              child: AppCachedImage(imageUrl: doctorModel.photo ?? ''),
             ),
           ),
-          horizontalSpace(16.w),
+          horizontalSpace(16),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

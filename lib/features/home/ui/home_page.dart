@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_complete_project/core/helpers/spacing.dart';
 import 'package:flutter_complete_project/core/theming/colors.dart';
 import 'package:flutter_complete_project/core/theming/styles.dart';
+import 'package:flutter_complete_project/core/widgets/app_message_widget.dart';
 import 'package:flutter_complete_project/features/home/data/models/specializations_response_model.dart';
 import 'package:flutter_complete_project/features/home/ui/logic/home_cubit.dart';
 import 'package:flutter_complete_project/features/home/ui/logic/home_state.dart';
@@ -10,6 +11,7 @@ import 'package:flutter_complete_project/features/home/ui/widgets/home_page_widg
 import 'package:flutter_complete_project/features/home/ui/widgets/home_page_widgets/doctors_blue_container.dart';
 import 'package:flutter_complete_project/features/home/ui/widgets/home_page_widgets/doctors_speciality.dart';
 import 'package:flutter_complete_project/features/home/ui/widgets/home_page_widgets/home_top_bar.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -18,14 +20,28 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Container(
-            width: double.infinity,
-            margin: const EdgeInsets.fromLTRB(20, 16, 20, 28),
-            child: Column(
-              children: [
-                const HomeTopBar(),
-                BlocBuilder<HomeCubit, HomeState>(
+        bottom: false,
+        child: Container(
+          width: double.infinity,
+          margin: EdgeInsets.fromLTRB(20.w, 16.h, 20.w, 0),
+          child: Column(
+            children: [
+              const HomeTopBar(),
+              verticalSpace(16),
+              Expanded(
+                child: BlocConsumer<HomeCubit, HomeState>(
+                  listenWhen: (previous, current) => current is Error,
+                  listener: (context, state) {
+                    state.whenOrNull(
+                      error: (error) => AppMessageWidget(
+                        message: error.getAllMessages(),
+                        actionLabel: 'Retry',
+                        onAction: () {
+                          context.read<HomeCubit>().getHomeData();
+                        },
+                      ),
+                    );
+                  },
                   buildWhen: (previous, current) =>
                       current is Loading ||
                       current is Success ||
@@ -40,33 +56,55 @@ class HomePage extends StatelessWidget {
                       success: (data) {
                         final SpecializationsResponseModel
                         specializationsResponseModel = data;
-                        final List<DoctorModel?> listOfDoctors =
-                            specializationsResponseModel
-                                .listOfSpecializations![0]!
-                                .doctors!;
-                        return Column(
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const DoctorsBlueContainer(),
-                                verticalSpace(16),
-                                const DoctorSpeciality(),
-                                verticalSpace(23),
-                                ListOfDoctors(listOfDoctors: listOfDoctors),
-                              ],
+                        final specializations =
+                            specializationsResponseModel.listOfSpecializations;
+                        if (specializations == null ||
+                            specializations.isEmpty) {
+                          return const Center(
+                            child: AppMessageWidget(
+                              message: 'No Specializations Found',
                             ),
-                          ],
+                          );
+                        }
+                        final List<DoctorModel?> listOfDoctors =
+                            specializations[0]?.doctors ?? [];
+                        if (listOfDoctors.isEmpty) {
+                          return const Center(
+                            child: AppMessageWidget(
+                              message: 'No Doctors Found',
+                            ),
+                          );
+                        }
+                        return SingleChildScrollView(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const DoctorsBlueContainer(),
+                              verticalSpace(16),
+                              const DoctorSpeciality(),
+                              verticalSpace(23),
+                              ListOfDoctors(listOfDoctors: listOfDoctors),
+                            ],
+                          ),
                         );
                       },
-                      error: (error) =>
-                          Center(child: Text(error.message ?? 'Error')),
+                      error: (error) {
+                        return Center(
+                          child: AppMessageWidget(
+                            message: error.getAllMessages(),
+                            actionLabel: 'Retry',
+                            onAction: () {
+                              context.read<HomeCubit>().getHomeData();
+                            },
+                          ),
+                        );
+                      },
                       orElse: () => const SizedBox.shrink(),
                     );
                   },
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

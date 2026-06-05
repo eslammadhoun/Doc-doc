@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_complete_project/core/helpers/extensions.dart';
 import 'package:flutter_complete_project/core/helpers/spacing.dart';
+import 'package:flutter_complete_project/core/routing/routes.dart';
 import 'package:flutter_complete_project/core/theming/styles.dart';
-import 'package:flutter_complete_project/features/home/ui/logic/home_cubit.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DoctorsBlueContainer extends StatelessWidget {
@@ -40,10 +40,11 @@ class DoctorsBlueContainer extends StatelessWidget {
                     backgroundColor: Colors.white,
                     elevation: 0,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadiusGeometry.circular(48.r),
+                      borderRadius: BorderRadius.circular(48.r),
                     ),
                   ),
-                  onPressed: () => context.read<HomeCubit>().getHomeData(),
+                  onPressed: () =>
+                      context.pushNamed(Routes.nearbyDoctorsScreen),
                   child: Text(
                     'Find Nearby',
                     style: TextStyles.font12RegularBlue,

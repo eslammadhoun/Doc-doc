@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_complete_project/core/helpers/constants.dart';
 import 'package:flutter_complete_project/core/routing/app_router.dart';
 import 'package:flutter_complete_project/core/routing/routes.dart';
 import 'package:flutter_complete_project/core/theming/colors.dart';
@@ -7,7 +6,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DocApp extends StatelessWidget {
   final AppRouter appRouter;
-  const DocApp({super.key, required this.appRouter});
+  final bool isLoggedIn;
+  const DocApp({super.key, required this.appRouter, required this.isLoggedIn});
 
   @override
   Widget build(BuildContext context) {
@@ -15,6 +15,7 @@ class DocApp extends StatelessWidget {
       designSize: Size(375, 812),
       minTextAdapt: true,
       child: MaterialApp(
+        navigatorKey: AppRouter.globalNavigatorKey,
         debugShowCheckedModeBanner: false,
         title: 'Advanced App',
         theme: ThemeData(
@@ -23,9 +24,7 @@ class DocApp extends StatelessWidget {
           scaffoldBackgroundColor: Colors.white,
         ),
         onGenerateRoute: AppRouter.generateRoute,
-        initialRoute: isloggedInUser
-            ? Routes.homeScreen
-            : Routes.onBoardingScreen,
+        initialRoute: isLoggedIn ? Routes.homeScreen : Routes.onBoardingScreen,
       ),
     );
   }

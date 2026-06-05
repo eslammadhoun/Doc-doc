@@ -8,22 +8,17 @@ import 'package:flutter_complete_project/doc_app.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void main() async {
-  await ScreenUtil.ensureScreenSize();
   WidgetsFlutterBinding.ensureInitialized();
+  await ScreenUtil.ensureScreenSize();
   await Firebase.initializeApp();
   await setupDI();
-  await checkIfUserLoggedIn();
-  runApp(DocApp(appRouter: AppRouter()));
+  final bool isLoggedIn = await checkIfUserLoggedIn();
+  runApp(DocApp(appRouter: AppRouter(), isLoggedIn: isLoggedIn));
 }
 
-Future<void> checkIfUserLoggedIn() async {
-  String? userToken = await AppPreferences.getSecuredString(
+Future<bool> checkIfUserLoggedIn() async {
+  final String userToken = await AppPreferences.getSecuredString(
     Constants.userToken,
   );
-  // ignore: unnecessary_null_comparison
-  if (userToken != null && userToken.isNotEmpty) {
-    isloggedInUser = true;
-  } else {
-    isloggedInUser = false;
-  }
+  return userToken.isNotEmpty;
 }
