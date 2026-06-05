@@ -15,6 +15,7 @@ LoginResponse _$LoginResponseFromJson(Map<String, dynamic> json) =>
       status: json['status'] as bool?,
       code: (json['code'] as num?)?.toInt(),
     );
+
 UserData _$UserDataFromJson(Map<String, dynamic> json) => UserData(
   token: json['token'] as String?,
   name: json['username'] as String?,

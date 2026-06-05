@@ -8,7 +8,7 @@ import 'package:flutter_complete_project/core/theming/styles.dart';
 import 'package:flutter_complete_project/core/widgets/app_text_button.dart';
 import 'package:flutter_complete_project/features/auth/register/data/models/register_request_body.dart';
 import 'package:flutter_complete_project/features/auth/register/ui/widgets/register_bloc_listener.dart';
-import 'package:flutter_complete_project/features/auth/register/logic/cubit/register_cubit.dart';
+import 'package:flutter_complete_project/features/auth/register/ui/logic/register_cubit.dart';
 import 'package:flutter_complete_project/features/auth/register/ui/widgets/register_form.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

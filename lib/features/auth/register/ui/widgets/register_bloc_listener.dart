@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_complete_project/core/helpers/extensions.dart';
 import 'package:flutter_complete_project/core/routing/routes.dart';
 import 'package:flutter_complete_project/core/theming/colors.dart';
-import 'package:flutter_complete_project/features/auth/register/logic/cubit/register_cubit.dart';
-import 'package:flutter_complete_project/features/auth/register/logic/cubit/register_state.dart';
+import 'package:flutter_complete_project/features/auth/register/ui/logic/register_cubit.dart';
+import 'package:flutter_complete_project/features/auth/register/ui/logic/register_state.dart';
 
 class RegisterBlocListener extends StatelessWidget {
   const RegisterBlocListener({super.key});

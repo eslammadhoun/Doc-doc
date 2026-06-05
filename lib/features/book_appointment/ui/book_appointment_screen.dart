@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_complete_project/core/helpers/spacing.dart';
 import 'package:flutter_complete_project/core/theming/colors.dart';
 import 'package:flutter_complete_project/core/theming/styles.dart';
-import 'package:flutter_complete_project/features/book_appointment/ui/widgets/book_appointment_widgets/appointment_navbar.dart';
-import 'package:flutter_complete_project/features/book_appointment/ui/widgets/book_appointment_widgets/appointment_stepper.dart';
-import 'package:flutter_complete_project/features/book_appointment/ui/widgets/book_appointment_widgets/appointment_type_section.dart';
-import 'package:flutter_complete_project/features/book_appointment/ui/widgets/book_appointment_widgets/date_picker_section.dart';
-import 'package:flutter_complete_project/features/book_appointment/ui/widgets/book_appointment_widgets/time_slots_section.dart';
+import 'package:flutter_complete_project/features/book_appointment/ui/widgets/appointment_navbar.dart';
+import 'package:flutter_complete_project/features/book_appointment/ui/widgets/appointment_stepper.dart';
+import 'package:flutter_complete_project/features/book_appointment/ui/widgets/appointment_type_section.dart';
+import 'package:flutter_complete_project/features/book_appointment/ui/widgets/date_picker_section.dart';
+import 'package:flutter_complete_project/features/book_appointment/ui/widgets/time_slots_section.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class BookAppointmentScreen extends StatelessWidget {

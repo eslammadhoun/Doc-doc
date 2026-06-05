@@ -57,22 +57,73 @@ The `HomeCubit` is initialized **and** `getHomeData()` is called directly in the
 
 ### Feature structure
 
-Each feature under `lib/features/<name>/` follows:
+#### Single-screen feature (e.g. `login`, `register`, `book_appointment`)
 
 ```
-data/
-  models/     # json_serializable models (hand-write + run build_runner)
-  repos/      # Repo class — calls API service, wraps result in ApiResult<T>
-  apis/       # Feature-specific Retrofit @RestApi service + generated .g.dart
-ui/
-  logic/
-    <name>_cubit.dart   # extends Cubit<NameState>
-    <name>_state.dart   # @freezed states: initial, loading, success, error
-  <name>_screen.dart
-  widgets/
+features/<name>/
+  data/
+    models/     # json_serializable models (hand-write + run build_runner)
+    repos/      # Repo class — calls API service, wraps result in ApiResult<T>
+    apis/       # Feature-specific Retrofit @RestApi service + generated .g.dart
+  ui/
+    logic/
+      <name>_cubit.dart   # extends Cubit<NameState>
+      <name>_state.dart   # @freezed states: initial, loading, success, error
+      <name>_state.freezed.dart
+    widgets/              # flat — no sub-subfolder
+      <widget_a>.dart
+    <name>_screen.dart
 ```
 
-Login/Register use `lib/features/<name>/logic/cubit/` (one extra nesting level vs Home which uses `ui/logic/`).
+#### Multi-screen feature (e.g. `home`)
+
+```
+features/home/
+  data/                   # shared across ALL screens in this feature
+    models/
+    repos/
+    apis/
+  ui/
+    home/                 # one subfolder per screen
+      logic/
+        home_cubit.dart
+        home_state.dart
+        home_state.freezed.dart
+      widgets/
+        doctor_widget.dart
+        doctors_speciality.dart
+        ...
+      home_page.dart
+    nearby_doctors/
+      logic/
+        nearby_doctors_cubit.dart
+        nearby_doctors_state.dart
+        nearby_doctors_state.freezed.dart
+      widgets/
+        nearby_doctor_card.dart
+        ...
+      nearby_doctors_screen.dart
+    specializations/
+      widgets/
+        specialization_item.dart
+        ...
+      specializations_screen.dart
+    notifications/
+      widgets/
+        notifications_list.dart
+        ...
+      notifications_page.dart
+```
+
+**Rules:**
+- `data/` belongs to the feature, not to any single screen — all screens in the feature share it.
+- Every screen gets its own subfolder inside `ui/`.
+- `logic/` (Cubit + State) lives inside the screen's subfolder.
+- `widgets/` inside each screen's subfolder is flat — no nested sub-subfolders.
+- Screens that don't fetch data independently (display-only) have no `logic/` subfolder.
+- One Cubit per screen that independently calls an API. Never merge two screens' state into one Cubit.
+- Cubit state uses Freezed sealed unions: `initial | loading | success(T) | error(ApiErrorModel)`.
+- Register each Cubit as `registerFactory` in DI — never `registerSingleton` for a Cubit.
 
 ### Theming (`lib/core/theming/`)
 

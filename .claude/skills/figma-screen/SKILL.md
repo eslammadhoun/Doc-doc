@@ -39,7 +39,12 @@ Set `cubitsMode` to one of: `new` | `linked:<CubitClassName>` | `none`.
 - `screenNameCamel` = camelCase (e.g. `doctorProfile`)
 - `screenNameSnake` = snake_case (e.g. `doctor_profile`)
 - `routeConst` = camelCase + `Screen` (e.g. `doctorProfileScreen`)
-- `featureDir` = if new → `lib/features/{screenNameSnake}/` ; if existing → existing feature path
+- `featureDir` = if new → `lib/features/{screenNameSnake}/` ; if existing → existing feature root (e.g. `lib/features/home/`)
+- `screenDir` = the folder that owns this screen's files:
+  - **new feature** (single-screen) → `{featureDir}/ui/`
+  - **existing multi-screen feature** (e.g. adding to `home`) → `{featureDir}/ui/{screenNameSnake}/`
+
+> **Multi-screen feature rule:** If the target feature already contains multiple screens (each in their own `ui/<screen>/` subfolder), the new screen MUST follow the same pattern — it gets its own `ui/{screenNameSnake}/` subfolder with `logic/` and `widgets/` inside it. Never place files directly under `ui/` in a multi-screen feature.
 
 ---
 
@@ -99,10 +104,10 @@ Act based on `cubitsMode`:
 
 ### cubitsMode = `new` — create a fresh UI-only Cubit
 
-File: `lib/features/{featureDir}/ui/logic/{screenNameSnake}_cubit.dart`
+File: `{screenDir}/logic/{screenNameSnake}_cubit.dart`
 ```dart
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_complete_project/features/{featureDir}/ui/logic/{screenNameSnake}_state.dart';
+import 'package:flutter_complete_project/features/.../{screenNameSnake}_state.dart';
 
 class {ScreenName}Cubit extends Cubit<{ScreenName}State> {
   {ScreenName}Cubit() : super(const {ScreenName}State());
@@ -111,7 +116,7 @@ class {ScreenName}Cubit extends Cubit<{ScreenName}State> {
 }
 ```
 
-File: `lib/features/{featureDir}/ui/logic/{screenNameSnake}_state.dart`
+File: `{screenDir}/logic/{screenNameSnake}_state.dart`
 ```dart
 import 'package:flutter/foundation.dart';
 
@@ -180,7 +185,9 @@ Follow the exact naming convention already present in the file.
 
 For each section/component identified in Step 2, create one Dart file:
 
-Path: `lib/features/{featureDir}/ui/widgets/{screenNameSnake}_widgets/{component_snake}.dart`
+Path: `{screenDir}/widgets/{component_snake}.dart`
+
+> The `widgets/` folder is **flat** — no sub-subfolder named after the screen. Just `widgets/{component}.dart`.
 
 Widget rules:
 - `StatelessWidget` by default. Use `StatefulWidget` only when the widget itself owns animation or `TextEditingController` state and nothing else can own it.
@@ -195,7 +202,7 @@ Widget rules:
 
 ## Step 7 — Create the screen file
 
-File: `lib/features/{featureDir}/ui/{screenNameSnake}_screen.dart`
+File: `{screenDir}/{screenNameSnake}_screen.dart`
 
 Template (adapt to the actual design — this is structure only):
 
@@ -204,7 +211,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_complete_project/core/helpers/spacing.dart';
 import 'package:flutter_complete_project/core/theming/colors.dart';
 // Import only section-level widgets, not deep children
-import 'package:flutter_complete_project/features/{featureDir}/ui/widgets/{screenNameSnake}_widgets/{section_a}.dart';
+import 'package:flutter_complete_project/features/.../{screenNameSnake}/widgets/{section_a}.dart';
 // ... other section imports
 
 class {ScreenName}Screen extends StatelessWidget {
@@ -289,8 +296,9 @@ case Routes.{routeConst}:
 
 **cubitsMode = `new` — new Cubit scaffolded in this skill:**
 ```dart
-import 'package:flutter_complete_project/features/{featureDir}/ui/{screenNameSnake}_screen.dart';
-import 'package:flutter_complete_project/features/{featureDir}/ui/logic/{screenNameSnake}_cubit.dart';
+// screenDir resolved to actual path — e.g. features/home/ui/doctor_profile/ or features/doctor_profile/ui/
+import 'package:flutter_complete_project/.../{screenNameSnake}_screen.dart';
+import 'package:flutter_complete_project/.../{screenNameSnake}/logic/{screenNameSnake}_cubit.dart';
 
 case Routes.{routeConst}:
   return MaterialPageRoute(
@@ -307,8 +315,8 @@ Locate the existing Cubit's import path under `lib/features/` first, then:
 
 ```dart
 // Use the actual path found in the project — not a placeholder
-import 'package:flutter_complete_project/features/{existingFeature}/ui/logic/{existing_cubit_snake}.dart';
-import 'package:flutter_complete_project/features/{featureDir}/ui/{screenNameSnake}_screen.dart';
+import 'package:flutter_complete_project/features/{existingFeature}/ui/{existingScreen}/logic/{existing_cubit_snake}.dart';
+import 'package:flutter_complete_project/features/.../{screenNameSnake}_screen.dart';
 
 case Routes.{routeConst}:
   return MaterialPageRoute(

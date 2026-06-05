@@ -12,11 +12,6 @@ Map<String, dynamic> _$RegisterRequestBodyToJson(
   'name': instance.name,
   'email': instance.email,
   'password': instance.password,
-  'password_confirmation': instance.password,
   'phone': instance.phone,
-  'gender': instance.gender == 'male'
-      ? 0
-      : instance.gender == 'female'
-      ? 1
-      : null,
+  'gender': instance.gender,
 };

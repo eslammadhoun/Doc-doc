@@ -1,7 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 part 'register_request_body.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(createFactory: false)
 class RegisterRequestBody {
   final String? name;
   final String? email;

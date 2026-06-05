@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_complete_project/core/helpers/spacing.dart';
 import 'package:flutter_complete_project/core/widgets/app_text_form_field.dart';
 import 'package:flutter_complete_project/core/widgets/password_validations.dart';
-import 'package:flutter_complete_project/features/auth/register/logic/cubit/register_cubit.dart';
+import 'package:flutter_complete_project/features/auth/register/ui/logic/register_cubit.dart';
 
 class RegisterForm extends StatefulWidget {
   const RegisterForm({super.key});

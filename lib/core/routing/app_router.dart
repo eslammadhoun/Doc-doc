@@ -3,17 +3,19 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_complete_project/core/di/dependancy_injection.dart';
 import 'package:flutter_complete_project/core/routing/routes.dart';
 import 'package:flutter_complete_project/features/home/data/repos/home_repo.dart';
-import 'package:flutter_complete_project/features/home/ui/home_page.dart';
-import 'package:flutter_complete_project/features/home/ui/logic/home_cubit.dart';
+import 'package:flutter_complete_project/features/home/ui/home/home_page.dart';
+import 'package:flutter_complete_project/features/home/ui/home/logic/home_cubit.dart';
 import 'package:flutter_complete_project/features/book_appointment/ui/book_appointment_screen.dart';
 import 'package:flutter_complete_project/features/book_appointment/ui/logic/book_appointment_cubit.dart';
-import 'package:flutter_complete_project/features/home/ui/logic/nearby_doctors_cubit.dart';
-import 'package:flutter_complete_project/features/home/ui/nearby_doctors_screen.dart';
-import 'package:flutter_complete_project/features/home/ui/notifications_page.dart';
-import 'package:flutter_complete_project/features/auth/login/logic/cubit/login_cubit.dart';
+import 'package:flutter_complete_project/features/home/ui/nearby_doctors/logic/nearby_doctors_cubit.dart';
+import 'package:flutter_complete_project/features/home/ui/nearby_doctors/nearby_doctors_screen.dart';
+import 'package:flutter_complete_project/features/home/ui/notifications/notifications_page.dart';
+import 'package:flutter_complete_project/features/home/ui/specializations/specializations_screen.dart';
+import 'package:flutter_complete_project/features/home/data/models/home_response_model.dart';
+import 'package:flutter_complete_project/features/auth/login/ui/logic/login_cubit.dart';
 import 'package:flutter_complete_project/features/auth/login/ui/login_screen.dart';
-import 'package:flutter_complete_project/features/onboarding/onboarding_screen.dart';
-import 'package:flutter_complete_project/features/auth/register/logic/cubit/register_cubit.dart';
+import 'package:flutter_complete_project/features/auth/onboarding/onboarding_screen.dart';
+import 'package:flutter_complete_project/features/auth/register/ui/logic/register_cubit.dart';
 import 'package:flutter_complete_project/features/auth/register/ui/register_screen.dart';
 
 class AppRouter {
@@ -65,6 +67,14 @@ class AppRouter {
           builder: (context) => BlocProvider<NearbyDoctorsCubit>(
             create: (context) => sl<NearbyDoctorsCubit>()..getNearbyDoctors(),
             child: const NearbyDoctorsScreen(),
+          ),
+        );
+      case Routes.specializationsScreen:
+        final specializations =
+            route.arguments as List<SpecializationData>;
+        return MaterialPageRoute(
+          builder: (_) => SpecializationsScreen(
+            specializations: specializations,
           ),
         );
       default:

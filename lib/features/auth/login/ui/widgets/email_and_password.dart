@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_complete_project/core/helpers/spacing.dart';
 import 'package:flutter_complete_project/core/widgets/app_text_form_field.dart';
-import 'package:flutter_complete_project/features/auth/login/logic/cubit/login_cubit.dart';
+import 'package:flutter_complete_project/features/auth/login/ui/logic/login_cubit.dart';
 import 'package:flutter_complete_project/core/widgets/password_validations.dart';
 
 class EmailAndPassword extends StatefulWidget {

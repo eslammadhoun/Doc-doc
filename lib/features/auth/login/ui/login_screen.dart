@@ -7,7 +7,7 @@ import 'package:flutter_complete_project/core/theming/colors.dart';
 import 'package:flutter_complete_project/core/theming/styles.dart';
 import 'package:flutter_complete_project/core/widgets/app_text_button.dart';
 import 'package:flutter_complete_project/features/auth/login/data/models/login_request_body.dart';
-import 'package:flutter_complete_project/features/auth/login/logic/cubit/login_cubit.dart';
+import 'package:flutter_complete_project/features/auth/login/ui/logic/login_cubit.dart';
 import 'package:flutter_complete_project/features/auth/login/ui/widgets/email_and_password.dart';
 import 'package:flutter_complete_project/features/auth/login/ui/widgets/login_bloc_listener.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
