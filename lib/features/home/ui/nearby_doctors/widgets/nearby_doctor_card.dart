@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_complete_project/core/helpers/spacing.dart';
 import 'package:flutter_complete_project/core/theming/styles.dart';
 import 'package:flutter_complete_project/core/widgets/image_widget.dart';
-import 'package:flutter_complete_project/features/home/data/models/home_response_model.dart';
+import 'package:flutter_complete_project/core/models/doctor_model.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 

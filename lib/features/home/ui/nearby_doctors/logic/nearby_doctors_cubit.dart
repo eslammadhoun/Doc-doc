@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_complete_project/core/networkingv2/api_result.dart';
-import 'package:flutter_complete_project/features/home/data/models/home_response_model.dart';
+import 'package:flutter_complete_project/core/models/doctor_model.dart';
 import 'package:flutter_complete_project/features/home/data/repos/nearby_doctors_repo.dart';
 import 'package:flutter_complete_project/features/home/ui/nearby_doctors/logic/nearby_doctors_state.dart';
 

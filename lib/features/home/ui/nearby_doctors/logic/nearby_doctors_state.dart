@@ -1,5 +1,5 @@
 import 'package:flutter_complete_project/core/networkingv2/api_error_model.dart';
-import 'package:flutter_complete_project/features/home/data/models/home_response_model.dart';
+import 'package:flutter_complete_project/core/models/doctor_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 part 'nearby_doctors_state.freezed.dart';
 

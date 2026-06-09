@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_complete_project/core/theming/colors.dart';
 import 'package:flutter_complete_project/core/widgets/app_message_widget.dart';
-import 'package:flutter_complete_project/features/home/data/models/home_response_model.dart';
+import 'package:flutter_complete_project/core/models/doctor_model.dart';
 import 'package:flutter_complete_project/features/home/ui/nearby_doctors/logic/nearby_doctors_cubit.dart';
 import 'package:flutter_complete_project/features/home/ui/nearby_doctors/logic/nearby_doctors_state.dart';
 import 'package:flutter_complete_project/features/home/ui/nearby_doctors/widgets/doctor_map_pin.dart';
