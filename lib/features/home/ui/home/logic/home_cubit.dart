@@ -5,7 +5,7 @@ import 'package:flutter_complete_project/features/home/data/models/home_response
 import 'package:flutter_complete_project/features/home/data/repos/home_repo.dart';
 import 'package:flutter_complete_project/features/home/ui/home/logic/home_state.dart';
 
-class HomeCubit extends Cubit<HomeState> {
+class HomeCubit extends Cubit<HomeState<HomeResponseModel>> {
   final HomeRepo homeRepo;
   HomeCubit({required this.homeRepo}) : super(HomeState.initial());
 

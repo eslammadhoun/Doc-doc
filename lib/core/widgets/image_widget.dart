@@ -5,11 +5,15 @@ import 'package:flutter_complete_project/core/theming/colors.dart';
 class AppCachedImage extends StatelessWidget {
   final String imageUrl;
   final BoxFit fit;
+  final int? memCacheWidth;
+  final int? memCacheHeight;
 
   const AppCachedImage({
     super.key,
     required this.imageUrl,
     this.fit = BoxFit.cover,
+    this.memCacheWidth,
+    this.memCacheHeight,
   });
 
   @override
@@ -17,6 +21,8 @@ class AppCachedImage extends StatelessWidget {
     return CachedNetworkImage(
       imageUrl: imageUrl,
       fit: fit,
+      memCacheWidth: memCacheWidth,
+      memCacheHeight: memCacheHeight,
       placeholder: (context, url) => Center(
         child: CircularProgressIndicator(
           color: ColorsManager.mainBlue,

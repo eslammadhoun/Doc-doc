@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_complete_project/core/helpers/spacing.dart';
 import 'package:flutter_complete_project/core/theming/styles.dart';
 import 'package:flutter_complete_project/core/widgets/image_widget.dart';
-import 'package:flutter_complete_project/features/home/data/models/home_response_model.dart';
+import 'package:flutter_complete_project/core/models/doctor_model.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -39,7 +39,7 @@ class DoctorWidget extends StatelessWidget {
                 ),
                 verticalSpace(8),
                 Text(
-                  'General | RSUD Gatot Subroto',
+                  '${doctorModel.specialization?.name ?? 'general'} | ${doctorModel.degree}',
                   style: TextStyles.font11MediumGrey,
                 ),
                 verticalSpace(12),

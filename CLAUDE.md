@@ -151,3 +151,20 @@ dart run build_runner build --delete-conflicting-outputs
 Asset directories (`assets/images/`, `assets/svgs/`) are registered wholesale in `pubspec.yaml` — dropping a file into either folder requires no further config.
 
 Note: the onboarding feature directory is intentionally spelled `lib/features/onboadring/` (typo in original scaffold).
+
+### Performance — hard rules (always apply, no exceptions)
+
+- **Images**: every `AppCachedImage` that renders at a fixed size MUST set `memCacheWidth`/`memCacheHeight` to that display size (in device pixels, e.g. `110.w.round()`). Decoding full network-resolution bitmaps into small boxes is the #1 cause of jank when a list of photos first appears.
+- **Repeated list items**: wrap each item built by `ListView.builder`/`.separated` in a `RepaintBoundary` (see `DoctorCard`) so each card's shadow/decoration is rasterized and cached independently instead of repainted as a group.
+- **`BlocBuilder`/`BlocConsumer` scoping**: wrap only the subtree that actually depends on the cubit's state — never the whole screen (navbar, search bars, static chrome must sit outside it). Prefer `BlocSelector<Cubit, State, T>` when a widget only needs a slice of the state (e.g. `doctors.length`), so it skips rebuilds when that slice is unchanged.
+- **`const` constructors**: use `const` on every widget that can be constant. This lets Flutter skip rebuilding it entirely — free performance, pure discipline.
+- **Lists**: always `ListView.builder`/`.separated` for dynamic data — never `ListView(children: [...])`, which builds every item upfront regardless of visibility. Set `itemExtent`/`prototypeItem` when items have a fixed height.
+- **Debug-only flags must never be committed**: `debugRepaintRainbowEnabled`, `debugPaintSizeEnabled`, `showPerformanceOverlay`, etc. are temporary local diagnostics — they must never appear in `main_development.dart` or `main_production.dart` in a commit. (We previously shipped `debugRepaintRainbowEnabled = true` in *both* entry points, including production — always grep for `debug*Enabled` before committing changes to `main_*.dart`.)
+
+### Performance — guidance (apply judgment; review before shipping a data-heavy screen)
+
+- **Shadows/blur/clip/opacity are expensive when repeated**: keep `BoxShadow.blurRadius` small (≤ ~8.r) on list items, prefer `Material`/`Card` elevation over hand-rolled `BoxShadow`, prefer a plain `BorderRadius` on `Container`/`DecoratedBox` over `ClipRRect`/`ClipPath` where possible, and avoid `Opacity` on complex subtrees (use `AnimatedOpacity`/`FadeTransition` or pre-baked transparent assets instead).
+- **Debounce search/typeahead inputs** before firing API calls — never fire a request on every keystroke.
+- **Cancel in-flight Dio requests on dispose** with `CancelToken` to avoid wasted work and "used after dispose" errors when the user navigates away mid-fetch.
+- **Profile in profile mode** (`flutter run --profile`), not debug — debug-mode JIT/assertion overhead distorts perceived jank. Use DevTools' Performance/Timeline view to find frames over the 16ms budget, and "Track widget rebuilds" to spot over-rebuilding before it becomes visible.
+- **Dispose controllers** (`TextEditingController`, `AnimationController`, `ScrollController`) — leaks compound over a session into gradual slowdown.

@@ -15,8 +15,10 @@ class AppTextFormField extends StatelessWidget {
     this.suffixIcon,
     this.obscureText,
     this.formFieldColor,
+    this.prefixIcon,
     required this.controller,
     required this.validator,
+    this.border,
   });
   final EdgeInsetsGeometry? contentPadding;
   final InputBorder? focusedBorder;
@@ -25,6 +27,8 @@ class AppTextFormField extends StatelessWidget {
   final TextStyle? hintStyle;
   final String hintText;
   final Widget? suffixIcon;
+  final Widget? prefixIcon;
+  final InputBorder? border;
   final bool? obscureText;
   final Color? formFieldColor;
   final TextEditingController controller;
@@ -35,6 +39,7 @@ class AppTextFormField extends StatelessWidget {
     return TextFormField(
       autovalidateMode: AutovalidateMode.onUserInteraction,
       decoration: InputDecoration(
+        border: border,
         fillColor: formFieldColor ?? ColorsManager.moreLighterGrey,
         filled: true,
         isDense: true,
@@ -70,6 +75,7 @@ class AppTextFormField extends StatelessWidget {
         hintStyle: hintStyle ?? TextStyles.font14RegularLightGrey,
         hintText: hintText,
         suffixIcon: suffixIcon,
+        prefixIcon: prefixIcon,
         suffixIconColor: (obscureText != null && obscureText == true)
             ? ColorsManager.grey
             : ColorsManager.mainBlue,

@@ -6,6 +6,10 @@ import 'package:flutter_complete_project/features/home/data/repos/home_repo.dart
 import 'package:flutter_complete_project/features/home/data/repos/nearby_doctors_repo.dart';
 import 'package:flutter_complete_project/features/home/ui/home/logic/home_cubit.dart';
 import 'package:flutter_complete_project/features/home/ui/nearby_doctors/logic/nearby_doctors_cubit.dart';
+import 'package:flutter_complete_project/features/home/data/repos/specializations_repo.dart';
+import 'package:flutter_complete_project/features/home/ui/specializations/logic/specializations_cubit.dart';
+import 'package:flutter_complete_project/features/home/data/repos/doctors_repo.dart';
+import 'package:flutter_complete_project/features/home/ui/doctors/logic/doctors_cubit.dart';
 import 'package:flutter_complete_project/features/auth/login/data/repos/login_repo.dart';
 import 'package:flutter_complete_project/features/auth/login/ui/logic/login_cubit.dart';
 import 'package:flutter_complete_project/features/auth/register/data/repos/register_repo.dart';
@@ -43,6 +47,25 @@ Future<void> setupDI() async {
   );
   sl.registerFactory<NearbyDoctorsCubit>(
     () => NearbyDoctorsCubit(nearbyDoctorsRepo: sl<NearbyDoctorsRepo>()),
+  );
+
+  // Specializations Feature
+  sl.registerLazySingleton<SpecializationsRepo>(
+    () => SpecializationsRepo(homeApiService: sl<HomeApiService>()),
+  );
+  sl.registerFactory<SpecializationsCubit>(
+    () => SpecializationsCubit(specializationsRepo: sl<SpecializationsRepo>()),
+  );
+
+  // Doctors Screen
+  sl.registerLazySingleton<DoctorsRepo>(
+    () => DoctorsRepo(homeApiService: sl<HomeApiService>()),
+  );
+  sl.registerFactoryParam<DoctorsCubit, int?, void>(
+    (specializationId, _) => DoctorsCubit(
+      doctorsRepo: sl<DoctorsRepo>(),
+      specializationId: specializationId,
+    ),
   );
 
   // Book Appointment Feature

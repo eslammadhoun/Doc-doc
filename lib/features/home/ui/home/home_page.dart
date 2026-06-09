@@ -4,6 +4,8 @@ import 'package:flutter_complete_project/core/helpers/spacing.dart';
 import 'package:flutter_complete_project/core/theming/colors.dart';
 import 'package:flutter_complete_project/core/theming/styles.dart';
 import 'package:flutter_complete_project/core/widgets/app_message_widget.dart';
+import 'package:flutter_complete_project/core/models/doctor_model.dart';
+import 'package:flutter_complete_project/core/routing/routes.dart';
 import 'package:flutter_complete_project/features/home/data/models/home_response_model.dart';
 import 'package:flutter_complete_project/features/home/ui/home/logic/home_cubit.dart';
 import 'package:flutter_complete_project/features/home/ui/home/logic/home_state.dart';
@@ -29,7 +31,7 @@ class HomePage extends StatelessWidget {
               const HomeTopBar(),
               verticalSpace(16),
               Expanded(
-                child: BlocConsumer<HomeCubit, HomeState>(
+                child: BlocConsumer<HomeCubit, HomeState<HomeResponseModel>>(
                   listenWhen: (previous, current) => current is Error,
                   listener: (context, state) {
                     state.whenOrNull(
@@ -63,8 +65,10 @@ class HomePage extends StatelessWidget {
                             ),
                           );
                         }
-                        final List<DoctorModel?> listOfDoctors =
-                            specializations[0]?.doctors ?? [];
+                        final List<DoctorModel> listOfDoctors = specializations
+                            .expand((s) => s.doctors ?? [])
+                            .whereType<DoctorModel>()
+                            .toList();
                         if (listOfDoctors.isEmpty) {
                           return const Center(
                             child: AppMessageWidget(
@@ -123,7 +127,10 @@ class ListOfDoctors extends StatelessWidget {
           children: [
             Text('Recommendation Doctors', style: TextStyles.font18SemiBold),
             const Spacer(),
-            Text('See All', style: TextStyles.font12RegularBlue),
+            GestureDetector(
+              onTap: () => Navigator.pushNamed(context, Routes.doctorsScreen),
+              child: Text('See All', style: TextStyles.font12RegularBlue),
+            ),
           ],
         ),
         verticalSpace(12),

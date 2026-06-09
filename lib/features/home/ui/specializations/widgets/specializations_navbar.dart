@@ -30,6 +30,7 @@ class SpecializationsNavbar extends StatelessWidget {
               ),
             ),
           ),
+          SizedBox(width: 40.w, height: 40.h),
         ],
       ),
     );

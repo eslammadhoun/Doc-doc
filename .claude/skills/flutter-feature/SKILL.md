@@ -332,6 +332,13 @@ case Routes.{routeConst}:
 **Error display**
 - Always use `AppMessageWidget` for errors — no `AlertDialog`, `SnackBar`, or `showDialog`.
 
+**Performance — hard rules**
+- `BlocBuilder`/`BlocConsumer` must wrap only the subtree that depends on cubit state — never the whole screen (static chrome like navbars/headers stays outside it). Prefer `BlocSelector` when a widget needs only a slice of the state.
+- Lists of dynamic data → `ListView.builder`/`.separated` only, never `ListView(children: [...])`. Wrap each repeated item's root in a `RepaintBoundary`.
+- Any `AppCachedImage` rendered at a fixed display size MUST set `memCacheWidth`/`memCacheHeight` to that size (e.g. `memCacheWidth: 110.w.round()`) — never let it decode at full network resolution.
+- Use `const` constructors wherever the widget has no runtime-dependent values.
+- Never commit `debugRepaintRainbowEnabled`, `debugPaintSizeEnabled`, `showPerformanceOverlay`, or similar diagnostic flags in `main_development.dart`/`main_production.dart` — they're for local, temporary profiling only.
+
 **DI**
 - ApiService → `registerLazySingleton`
 - Repo → `registerLazySingleton`

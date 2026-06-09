@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_complete_project/core/helpers/extensions.dart';
 import 'package:flutter_complete_project/core/helpers/spacing.dart';
+import 'package:flutter_complete_project/core/models/specialization_data_model.dart';
 import 'package:flutter_complete_project/core/routing/routes.dart';
 import 'package:flutter_complete_project/core/theming/styles.dart';
-import 'package:flutter_complete_project/features/home/data/models/home_response_model.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DoctorSpeciality extends StatelessWidget {
@@ -15,7 +16,7 @@ class DoctorSpeciality extends StatelessWidget {
       case 1:
         return 'general';
       case 2:
-        return 'Neurologic';
+        return 'Neurology';
       case 3:
         return 'Pediatric';
       case 4:
@@ -34,11 +35,8 @@ class DoctorSpeciality extends StatelessWidget {
             Text('Doctor Speciality', style: TextStyles.font18SemiBold),
             const Spacer(),
             GestureDetector(
-              onTap: () => Navigator.pushNamed(
-                context,
-                Routes.specializationsScreen,
-                arguments: listOfSpecializations,
-              ),
+              onTap: () =>
+                  Navigator.pushNamed(context, Routes.specializationsScreen),
               child: Text('See All', style: TextStyles.font12RegularBlue),
             ),
           ],
@@ -52,32 +50,41 @@ class DoctorSpeciality extends StatelessWidget {
             itemCount: listOfSpecializations.length,
             itemBuilder: (context, index) {
               final spec = listOfSpecializations[index];
-              return SizedBox(
-                width: 73.w,
-                height: 86.h,
-                child: Column(
-                  children: [
-                    Container(
-                      width: 56.w,
-                      height: 56.h,
-                      decoration: const BoxDecoration(
-                        color: Color(0xffF4F8FF),
-                        shape: BoxShape.circle,
-                      ),
-                      child: Center(
-                        child: Image.asset(
-                          'assets/images/${specialityIcon(index + 1)}.png',
-                          width: 24.w,
+              return InkWell(
+                onTap: () => context.pushNamed(
+                  Routes.doctorsScreen,
+                  argumants: {
+                    'specializationId': spec.id,
+                    'specializationName': spec.name,
+                  },
+                ),
+                child: SizedBox(
+                  width: 73.w,
+                  height: 86.h,
+                  child: Column(
+                    children: [
+                      Container(
+                        width: 56.w,
+                        height: 56.h,
+                        decoration: const BoxDecoration(
+                          color: Color(0xffF4F8FF),
+                          shape: BoxShape.circle,
+                        ),
+                        child: Center(
+                          child: Image.asset(
+                            'assets/images/${specialityIcon(index + 1)}.png',
+                            width: 24.w,
+                          ),
                         ),
                       ),
-                    ),
-                    verticalSpace(12),
-                    Text(
-                      spec.name ?? 'Speciality',
-                      style: TextStyles.font12RegularDarkBlue,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ],
+                      verticalSpace(12),
+                      Text(
+                        spec.name ?? 'Speciality',
+                        style: TextStyles.font12RegularDarkBlue,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ],
+                  ),
                 ),
               );
             },

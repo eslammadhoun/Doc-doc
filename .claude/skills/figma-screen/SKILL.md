@@ -196,6 +196,11 @@ Widget rules:
 - Gaps: `verticalSpace(n)` / `horizontalSpace(n)` helpers (from `lib/core/helpers/spacing.dart`) — never `SizedBox(height: n.h)` manually.
 - SVG assets: `SvgPicture.asset('assets/svgs/{file}.svg')` — no width/height hardcoded unless the design specifies it (use `.w`/`.h` extensions).
 - Image assets: use `lib/core/widgets/image_widget.dart` if it covers the case.
+- **Search bars** — ALWAYS implement as `TextFormField` with `InputDecoration` (`filled`, `fillColor`, `prefixIcon`, `hintText`, `border`/`enabledBorder`/`focusedBorder`). NEVER use a plain `Container` or `Row` with a `Text` as a fake search bar. A non-interactive search bar is broken UX.
+- **Performance — images**: when using `AppCachedImage` (or `image_widget.dart`) inside a card/tile that renders at a fixed display size, ALWAYS pass `memCacheWidth`/`memCacheHeight` matching that display size (e.g. `memCacheWidth: 110.w.round()`). Decoding full-resolution network photos into small boxes is the #1 cause of jank when a list first appears.
+- **Performance — repeated list items**: any widget that will be built repeatedly inside `ListView.builder`/`.separated` (cards, tiles) MUST be wrapped in a `RepaintBoundary` at its root so its decoration/shadow is rasterized and cached per-item rather than repainted as a group.
+- **Performance — shadows/clips**: keep `BoxShadow.blurRadius` small (≤ ~8.r) on repeated items; prefer a plain `BorderRadius` on `Container`/`DecoratedBox` over `ClipRRect`/`ClipPath` where the design allows it; avoid `Opacity` on complex subtrees.
+- **`const` everywhere possible** — every widget, `EdgeInsets`, `SizedBox`, etc. that has no runtime-dependent values should be `const`.
 - Do NOT add code comments explaining what the code does — name everything clearly instead.
 
 ---
@@ -362,4 +367,9 @@ Also confirm:
 | Data Cubit state | Freezed + `ApiResult` — only when connecting to a real API |
 | No comments | Do not explain WHAT the code does in comments |
 | No inline styles | No `fontSize`, `fontWeight`, `color` literals inside widgets |
+| Search bars | Always `TextFormField` — never a `Container`/`Row`+`Text` fake bar |
+| Image cache size | `AppCachedImage` in a fixed-size card MUST set `memCacheWidth`/`memCacheHeight` to display size |
+| Repeated list items | Wrap each `ListView.builder`/`.separated` item root in `RepaintBoundary` |
+| Bloc scoping | `BlocBuilder`/`BlocConsumer` wraps only the subtree depending on state — never the whole screen |
+| Debug flags | Never commit `debugRepaintRainbowEnabled`, `debugPaintSizeEnabled`, `showPerformanceOverlay`, etc. |
 | `flutter analyze` | Must exit clean before the skill reports done |

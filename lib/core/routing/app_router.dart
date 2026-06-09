@@ -10,8 +10,10 @@ import 'package:flutter_complete_project/features/book_appointment/ui/logic/book
 import 'package:flutter_complete_project/features/home/ui/nearby_doctors/logic/nearby_doctors_cubit.dart';
 import 'package:flutter_complete_project/features/home/ui/nearby_doctors/nearby_doctors_screen.dart';
 import 'package:flutter_complete_project/features/home/ui/notifications/notifications_page.dart';
+import 'package:flutter_complete_project/features/home/ui/specializations/logic/specializations_cubit.dart';
 import 'package:flutter_complete_project/features/home/ui/specializations/specializations_screen.dart';
-import 'package:flutter_complete_project/features/home/data/models/home_response_model.dart';
+import 'package:flutter_complete_project/features/home/ui/doctors/logic/doctors_cubit.dart';
+import 'package:flutter_complete_project/features/home/ui/doctors/doctors_screen.dart';
 import 'package:flutter_complete_project/features/auth/login/ui/logic/login_cubit.dart';
 import 'package:flutter_complete_project/features/auth/login/ui/login_screen.dart';
 import 'package:flutter_complete_project/features/auth/onboarding/onboarding_screen.dart';
@@ -69,12 +71,24 @@ class AppRouter {
             child: const NearbyDoctorsScreen(),
           ),
         );
-      case Routes.specializationsScreen:
-        final specializations =
-            route.arguments as List<SpecializationData>;
+      case Routes.doctorsScreen:
+        final Map<String, Object?>? arguments =
+            route.arguments as Map<String, dynamic>?;
+        final int? specializationId = arguments?['specializationId'] as int?;
+        final String? specializationName =
+            arguments?['specializationName'] as String?;
         return MaterialPageRoute(
-          builder: (_) => SpecializationsScreen(
-            specializations: specializations,
+          builder: (_) => BlocProvider<DoctorsCubit>(
+            create: (_) =>
+                sl<DoctorsCubit>(param1: specializationId)..fetchDoctors(),
+            child: DoctorsScreen(specializationName: specializationName),
+          ),
+        );
+      case Routes.specializationsScreen:
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider<SpecializationsCubit>(
+            create: (_) => sl<SpecializationsCubit>()..getSpecializations(),
+            child: const SpecializationsScreen(),
           ),
         );
       default:
