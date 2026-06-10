@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_complete_project/core/helpers/spacing.dart';
+import 'package:flutter_complete_project/core/routing/routes.dart';
 import 'package:flutter_complete_project/core/theming/colors.dart';
 import 'package:flutter_complete_project/core/widgets/app_message_widget.dart';
 import 'package:flutter_complete_project/features/home/ui/doctors/logic/doctors_cubit.dart';
@@ -55,8 +56,14 @@ class DoctorsScreen extends StatelessWidget {
                               padding: EdgeInsets.symmetric(horizontal: 16.w),
                               itemCount: doctors.length,
                               separatorBuilder: (_, _) => verticalSpace(12),
-                              itemBuilder: (context, index) =>
-                                  DoctorCard(doctor: doctors[index]),
+                              itemBuilder: (context, index) => GestureDetector(
+                                onTap: () => Navigator.pushNamed(
+                                  context,
+                                  Routes.doctorDetailsScreen,
+                                  arguments: doctors[index],
+                                ),
+                                child: DoctorCard(doctor: doctors[index]),
+                              ),
                             );
                           },
                           error: (error) => Center(

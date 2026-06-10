@@ -18,4 +18,5 @@ class ColorsManager {
   static const Color nearBlack = Color(0xFF121212);
   static const Color placeholderGrey = Color(0xFFB3B1B0);
   static const Color specialityIconBg = Color(0xffF4F8FF);
+  static const Color secondaryRed = Color(0xFFFF4C5E);
 }

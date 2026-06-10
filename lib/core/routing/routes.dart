@@ -8,4 +8,5 @@ class Routes {
   static const String nearbyDoctorsScreen = '/nearbyDoctorsScreen';
   static const String specializationsScreen = '/specializationsScreen';
   static const String doctorsScreen = '/doctorsScreen';
+  static const String doctorDetailsScreen = '/doctorDetailsScreen';
 }
