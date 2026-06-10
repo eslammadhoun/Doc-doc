@@ -14,6 +14,8 @@ import 'package:flutter_complete_project/features/home/ui/specializations/logic/
 import 'package:flutter_complete_project/features/home/ui/specializations/specializations_screen.dart';
 import 'package:flutter_complete_project/features/home/ui/doctors/logic/doctors_cubit.dart';
 import 'package:flutter_complete_project/features/home/ui/doctors/doctors_screen.dart';
+import 'package:flutter_complete_project/core/models/doctor_model.dart';
+import 'package:flutter_complete_project/features/home/ui/doctor_details/doctor_details_screen.dart';
 import 'package:flutter_complete_project/features/auth/login/ui/logic/login_cubit.dart';
 import 'package:flutter_complete_project/features/auth/login/ui/login_screen.dart';
 import 'package:flutter_complete_project/features/auth/onboarding/onboarding_screen.dart';
@@ -83,6 +85,11 @@ class AppRouter {
                 sl<DoctorsCubit>(param1: specializationId)..fetchDoctors(),
             child: DoctorsScreen(specializationName: specializationName),
           ),
+        );
+      case Routes.doctorDetailsScreen:
+        final DoctorModel doctor = route.arguments as DoctorModel;
+        return MaterialPageRoute(
+          builder: (_) => DoctorDetailsScreen(doctor: doctor),
         );
       case Routes.specializationsScreen:
         return MaterialPageRoute(
