@@ -28,4 +28,16 @@ class DoctorsRepo {
       return ApiResult.failure(ErrorHandler.handle(error));
     }
   }
+
+  Future<ApiResult<GetDoctorsResponseModel>> searchDoctors({
+    required String searchQuery,
+  }) async {
+    try {
+      final GetDoctorsResponseModel searchResult = await homeApiService
+          .searchDoctors(searchQuery: searchQuery);
+      return ApiResult.success(searchResult);
+    } catch (error) {
+      return ApiResult.failure(ErrorHandler.handle(error));
+    }
+  }
 }

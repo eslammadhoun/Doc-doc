@@ -10,9 +10,6 @@ GetDoctorsResponseModel _$GetDoctorsResponseModelFromJson(
   Map<String, dynamic> json,
 ) => GetDoctorsResponseModel(
   (json['data'] as List<dynamic>?)
-      ?.map(
-        (e) =>
-            e == null ? null : DoctorModel.fromJson(e as Map<String, dynamic>),
-      )
+      ?.map((e) => DoctorModel.fromJson(e as Map<String, dynamic>))
       .toList(),
 );
