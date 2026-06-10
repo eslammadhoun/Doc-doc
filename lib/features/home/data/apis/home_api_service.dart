@@ -29,4 +29,9 @@ abstract class HomeApiService {
 
   @GET(HomeApiConstants.specializationsEP)
   Future<GetSpecializationsResponseModel> getSpecializations();
+
+  @GET(HomeApiConstants.searchDoctors)
+  Future<GetDoctorsResponseModel> searchDoctors({
+    @Path('name') required String? searchQuery,
+  });
 }

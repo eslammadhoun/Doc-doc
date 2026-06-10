@@ -46,9 +46,8 @@ class DoctorsScreen extends StatelessWidget {
                                 child: AppMessageWidget(
                                   message: 'No Doctors Found',
                                   actionLabel: 'Retry',
-                                  onAction: () => context
-                                      .read<DoctorsCubit>()
-                                      .fetchDoctors(),
+                                  onAction: () =>
+                                      context.read<DoctorsCubit>().retry(),
                                 ),
                               );
                             }
@@ -65,7 +64,7 @@ class DoctorsScreen extends StatelessWidget {
                               message: error.getAllMessages(),
                               actionLabel: 'Retry',
                               onAction: () =>
-                                  context.read<DoctorsCubit>().fetchDoctors(),
+                                  context.read<DoctorsCubit>().retry(),
                             ),
                           ),
                           orElse: () => const SizedBox.shrink(),

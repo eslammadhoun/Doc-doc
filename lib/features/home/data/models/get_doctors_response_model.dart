@@ -5,7 +5,7 @@ part 'get_doctors_response_model.g.dart';
 @JsonSerializable(createToJson: false)
 class GetDoctorsResponseModel {
   @JsonKey(name: 'data')
-  final List<DoctorModel?>? doctors;
+  final List<DoctorModel>? doctors;
 
   const GetDoctorsResponseModel(this.doctors);
 

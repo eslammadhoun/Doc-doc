@@ -19,6 +19,7 @@ class AppTextFormField extends StatelessWidget {
     required this.controller,
     required this.validator,
     this.border,
+    this.onChanged,
   });
   final EdgeInsetsGeometry? contentPadding;
   final InputBorder? focusedBorder;
@@ -33,6 +34,7 @@ class AppTextFormField extends StatelessWidget {
   final Color? formFieldColor;
   final TextEditingController controller;
   final Function(String?) validator;
+  final void Function(String)? onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -84,6 +86,7 @@ class AppTextFormField extends StatelessWidget {
       style: inputTextStyle ?? TextStyles.font14MediumDarkBlue,
       controller: controller,
       validator: (value) => validator(value),
+      onChanged: onChanged,
     );
   }
 }

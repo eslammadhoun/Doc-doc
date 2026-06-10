@@ -12,6 +12,7 @@ class DoctorsCubit extends Cubit<DoctorsState> {
   List<String> specialities = ['All'];
   List<DoctorModel> _allDoctors = [];
   String selectedSpeciality = 'All';
+  String _currentSearchQuery = '';
 
   DoctorsCubit({required this.doctorsRepo, this.specializationId})
     : super(const DoctorsState.initial());
@@ -47,7 +48,7 @@ class DoctorsCubit extends Cubit<DoctorsState> {
     );
   }
 
-  Future<ApiResult<List<DoctorModel>>> _fetchSpecialityDoctors(int id) async {
+  Future<ApiResult<List<DoctorModel>>> _fetchSpecialityDoctors(int? id) async {
     final ApiResult<GetSpecializationResponseModel> result = await doctorsRepo
         .getSpecialityDoctors(specializationId: id);
     return result.when(
@@ -62,15 +63,56 @@ class DoctorsCubit extends Cubit<DoctorsState> {
   }
 
   void sortDoctors(String speciality) {
+    selectedSpeciality = speciality;
+    if (_currentSearchQuery.isNotEmpty) {
+      searchDoctors(searchQuery: _currentSearchQuery);
+      return;
+    }
     if (speciality == 'All') {
-      selectedSpeciality = 'All';
       emit(DoctorsState.success(_allDoctors));
       return;
     }
     final filtered = _allDoctors
         .where((d) => d.specialization?.name == speciality)
         .toList();
-    selectedSpeciality = speciality;
     emit(DoctorsState.success(filtered));
+  }
+
+  Future<void> searchDoctors({required String searchQuery}) async {
+    _currentSearchQuery = searchQuery;
+    if (searchQuery.isEmpty) {
+      sortDoctors(selectedSpeciality);
+      return;
+    }
+    emit(const DoctorsState.loading());
+    final ApiResult<GetDoctorsResponseModel> result = await doctorsRepo
+        .searchDoctors(searchQuery: searchQuery);
+    result.when(
+      success: (response) {
+        List<DoctorModel> results =
+            response.doctors?.whereType<DoctorModel>().toList() ?? [];
+        if (specializationId != null) {
+          results = results
+              .where((d) => d.specialization?.id == specializationId)
+              .toList();
+        } else if (selectedSpeciality != 'All') {
+          results = results
+              .where((d) => d.specialization?.name == selectedSpeciality)
+              .toList();
+        }
+        emit(DoctorsState.success(results));
+      },
+      failure: (error) => emit(DoctorsState.error(error)),
+    );
+  }
+
+  void retry() {
+    if (_currentSearchQuery.isNotEmpty) {
+      searchDoctors(searchQuery: _currentSearchQuery);
+    } else if (selectedSpeciality != 'All') {
+      sortDoctors(selectedSpeciality);
+    } else {
+      fetchDoctors();
+    }
   }
 }
