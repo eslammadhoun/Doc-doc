@@ -19,4 +19,5 @@ class ColorsManager {
   static const Color placeholderGrey = Color(0xFFB3B1B0);
   static const Color specialityIconBg = Color(0xffF4F8FF);
   static const Color secondaryRed = Color(0xFFFF4C5E);
+  static const Color secondaryGreen = Color(0xFF22C55E);
 }

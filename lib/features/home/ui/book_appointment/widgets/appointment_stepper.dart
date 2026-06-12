@@ -25,27 +25,33 @@ class AppointmentStepper extends StatelessWidget {
 
   Widget _buildStep(int step, String label) {
     final bool isActive = step == currentStep;
+    final bool isFinished = currentStep > step;
     return Column(
       children: [
         Container(
           width: 32.r,
           height: 32.r,
           decoration: BoxDecoration(
-            color: isActive ? ColorsManager.mainBlue : ColorsManager.inactiveGrey,
+            color: isFinished
+                ? ColorsManager.secondaryGreen
+                : isActive
+                ? ColorsManager.mainBlue
+                : ColorsManager.mediumGrey,
             borderRadius: BorderRadius.circular(16.r),
           ),
           alignment: Alignment.center,
-          child: Text(
-            '$step',
-            style: TextStyles.font12MediumWhite,
-          ),
+          child: Text('$step', style: TextStyles.font12MediumWhite),
         ),
         SizedBox(height: 6.h),
         Text(
           label,
-          style: isActive
-              ? TextStyles.font10RegularDarkBlue
-              : TextStyles.font10RegularGrey,
+          style: TextStyles.font10RegularDarkBlue.copyWith(
+            color: isFinished
+                ? ColorsManager.secondaryGreen
+                : isActive
+                ? ColorsManager.mainBlue
+                : ColorsManager.mediumGrey,
+          ),
         ),
       ],
     );

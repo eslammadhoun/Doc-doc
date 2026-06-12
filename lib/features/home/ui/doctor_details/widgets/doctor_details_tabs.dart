@@ -10,8 +10,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DoctorDetailsTabs extends StatefulWidget {
   final DoctorModel doctor;
+  final int initialIndex;
 
-  const DoctorDetailsTabs({super.key, required this.doctor});
+  const DoctorDetailsTabs({
+    super.key,
+    required this.doctor,
+    this.initialIndex = 0,
+  });
 
   @override
   State<DoctorDetailsTabs> createState() => _DoctorDetailsTabsState();
@@ -19,7 +24,13 @@ class DoctorDetailsTabs extends StatefulWidget {
 
 class _DoctorDetailsTabsState extends State<DoctorDetailsTabs> {
   static const List<String> _tabs = ['About', 'Location', 'Reviews'];
-  int _selectedIndex = 0;
+  late int _selectedIndex;
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedIndex = widget.initialIndex;
+  }
 
   @override
   Widget build(BuildContext context) {

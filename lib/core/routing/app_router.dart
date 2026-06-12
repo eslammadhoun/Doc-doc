@@ -5,8 +5,8 @@ import 'package:flutter_complete_project/core/routing/routes.dart';
 import 'package:flutter_complete_project/features/home/data/repos/home_repo.dart';
 import 'package:flutter_complete_project/features/home/ui/home/home_page.dart';
 import 'package:flutter_complete_project/features/home/ui/home/logic/home_cubit.dart';
-import 'package:flutter_complete_project/features/book_appointment/ui/book_appointment_screen.dart';
-import 'package:flutter_complete_project/features/book_appointment/ui/logic/book_appointment_cubit.dart';
+import 'package:flutter_complete_project/features/home/ui/book_appointment/book_appointment_screen.dart';
+import 'package:flutter_complete_project/features/home/ui/book_appointment/logic/book_appointment_cubit.dart';
 import 'package:flutter_complete_project/features/home/ui/nearby_doctors/logic/nearby_doctors_cubit.dart';
 import 'package:flutter_complete_project/features/home/ui/nearby_doctors/nearby_doctors_screen.dart';
 import 'package:flutter_complete_project/features/home/ui/notifications/notifications_page.dart';
@@ -29,6 +29,14 @@ class AppRouter {
     final _ = route.arguments;
 
     switch (route.name) {
+      case '/':
+        return MaterialPageRoute(
+          builder: (context) => BlocProvider<HomeCubit>(
+            create: (context) =>
+                HomeCubit(homeRepo: sl<HomeRepo>())..getHomeData(),
+            child: const HomePage(),
+          ),
+        );
       case Routes.onBoardingScreen:
         return MaterialPageRoute(
           builder: (context) => const OnboardingScreen(),
@@ -60,10 +68,11 @@ class AppRouter {
           builder: (BuildContext context) => NotificationsPage(),
         );
       case Routes.bookAppointmentScreen:
+        final DoctorModel doctor = route.arguments as DoctorModel;
         return MaterialPageRoute(
           builder: (context) => BlocProvider<BookAppointmentCubit>(
-            create: (context) => sl<BookAppointmentCubit>(),
-            child: const BookAppointmentScreen(),
+            create: (context) => sl<BookAppointmentCubit>(param1: doctor),
+            child: BookAppointmentScreen(doctor: doctor),
           ),
         );
       case Routes.nearbyDoctorsScreen:
