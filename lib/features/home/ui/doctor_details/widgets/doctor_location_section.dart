@@ -12,17 +12,15 @@ class DoctorLocationSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String practicePlace = [
-      doctor.city?.name,
-      doctor.city?.governrate?.name,
-    ].whereType<String>().join(', ');
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text('Practice Place', style: TextStyles.font16SemiBoldDarkBlue),
         verticalSpace(12),
-        Text(practicePlace, style: TextStyles.font14RegularGrey),
+        Text(
+          doctor.address ?? 'Doctor Location',
+          style: TextStyles.font14RegularGrey,
+        ),
         verticalSpace(18),
         Text('Location Map', style: TextStyles.font16SemiBoldDarkBlue),
         verticalSpace(12),

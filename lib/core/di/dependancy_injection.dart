@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_complete_project/core/models/doctor_model.dart';
 import 'package:flutter_complete_project/core/networkingv2/api_service.dart';
 import 'package:flutter_complete_project/core/networkingv2/dio_factory.dart';
 import 'package:flutter_complete_project/features/home/data/apis/home_api_service.dart';
@@ -13,7 +14,7 @@ import 'package:flutter_complete_project/features/home/ui/doctors/logic/doctors_
 import 'package:flutter_complete_project/features/auth/login/data/repos/login_repo.dart';
 import 'package:flutter_complete_project/features/auth/login/ui/logic/login_cubit.dart';
 import 'package:flutter_complete_project/features/auth/register/data/repos/register_repo.dart';
-import 'package:flutter_complete_project/features/book_appointment/ui/logic/book_appointment_cubit.dart';
+import 'package:flutter_complete_project/features/home/ui/book_appointment/logic/book_appointment_cubit.dart';
 import 'package:flutter_complete_project/features/auth/register/ui/logic/register_cubit.dart';
 import 'package:get_it/get_it.dart';
 
@@ -69,5 +70,10 @@ Future<void> setupDI() async {
   );
 
   // Book Appointment Feature
-  sl.registerFactory<BookAppointmentCubit>(() => BookAppointmentCubit());
+  sl.registerFactoryParam<BookAppointmentCubit, DoctorModel, void>(
+    (doctor, _) => BookAppointmentCubit(
+      startTime: doctor.startTime,
+      endTime: doctor.endTime,
+    ),
+  );
 }

@@ -1,7 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 part 'doctor_model.g.dart';
 
-@JsonSerializable(createToJson: false)
+@JsonSerializable()
 class DoctorModel {
   final int? id;
   final String? name;
@@ -40,9 +40,11 @@ class DoctorModel {
 
   factory DoctorModel.fromJson(Map<String, dynamic> json) =>
       _$DoctorModelFromJson(json);
+
+  Map<String, dynamic> toJson() => _$DoctorModelToJson(this);
 }
 
-@JsonSerializable(createToJson: false)
+@JsonSerializable()
 class Specialization {
   final int? id;
   final String? name;
@@ -51,9 +53,10 @@ class Specialization {
 
   factory Specialization.fromJson(Map<String, dynamic> json) =>
       _$SpecializationFromJson(json);
+  Map<String, dynamic> toJson() => _$SpecializationToJson(this);
 }
 
-@JsonSerializable(createToJson: false)
+@JsonSerializable()
 class City {
   final int? id;
   final String? name;
@@ -62,9 +65,10 @@ class City {
   City(this.id, this.name, this.governrate);
 
   factory City.fromJson(Map<String, dynamic> json) => _$CityFromJson(json);
+  Map<String, dynamic> toJson() => _$CityToJson(this);
 }
 
-@JsonSerializable(createToJson: false)
+@JsonSerializable()
 class Governrate {
   final int? id;
   final String? name;
@@ -73,4 +77,6 @@ class Governrate {
 
   factory Governrate.fromJson(Map<String, dynamic> json) =>
       _$GovernrateFromJson(json);
+
+  Map<String, dynamic> toJson() => _$GovernrateToJson(this);
 }

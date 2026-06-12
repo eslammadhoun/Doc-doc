@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_complete_project/core/helpers/spacing.dart';
 import 'package:flutter_complete_project/core/theming/colors.dart';
 import 'package:flutter_complete_project/core/theming/styles.dart';
-import 'package:flutter_complete_project/features/book_appointment/ui/logic/book_appointment_cubit.dart';
-import 'package:flutter_complete_project/features/book_appointment/ui/logic/book_appointment_state.dart';
+import 'package:flutter_complete_project/features/home/ui/book_appointment/logic/book_appointment_cubit.dart';
+import 'package:flutter_complete_project/features/home/ui/book_appointment/logic/book_appointment_state.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppointmentTypeSection extends StatelessWidget {
@@ -77,9 +77,7 @@ class _AppointmentTypeOption extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.only(bottom: 16.h),
         decoration: BoxDecoration(
-          border: Border(
-            bottom: BorderSide(color: ColorsManager.lighterGrey),
-          ),
+          border: Border(bottom: BorderSide(color: ColorsManager.lighterGrey)),
         ),
         child: Row(
           children: [
@@ -97,9 +95,7 @@ class _AppointmentTypeOption extends StatelessWidget {
               child: Text(label, style: TextStyles.font14RegularDarkBlue),
             ),
             Icon(
-              isSelected
-                  ? Icons.radio_button_checked
-                  : Icons.radio_button_off,
+              isSelected ? Icons.radio_button_checked : Icons.radio_button_off,
               color: isSelected
                   ? ColorsManager.mainBlue
                   : ColorsManager.lighterGrey,

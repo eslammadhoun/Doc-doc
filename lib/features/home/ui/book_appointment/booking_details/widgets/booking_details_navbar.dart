@@ -4,8 +4,8 @@ import 'package:flutter_complete_project/core/theming/styles.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class AppointmentNavbar extends StatelessWidget {
-  const AppointmentNavbar({super.key});
+class BookingDetailsNavbar extends StatelessWidget {
+  const BookingDetailsNavbar({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,7 @@ class AppointmentNavbar extends StatelessWidget {
             ),
           ),
         ),
-        Text('Book Appointment', style: TextStyles.font18SemiBold),
+        Text('Details', style: TextStyles.font18SemiBold),
         SizedBox(width: 40.r),
       ],
     );
