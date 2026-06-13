@@ -16,6 +16,7 @@ import 'package:flutter_complete_project/features/auth/login/ui/logic/login_cubi
 import 'package:flutter_complete_project/features/auth/register/data/repos/register_repo.dart';
 import 'package:flutter_complete_project/features/home/ui/book_appointment/logic/book_appointment_cubit.dart';
 import 'package:flutter_complete_project/features/auth/register/ui/logic/register_cubit.dart';
+import 'package:flutter_complete_project/features/main/ui/logic/main_cubit.dart';
 import 'package:get_it/get_it.dart';
 
 final GetIt sl = GetIt.instance;
@@ -76,4 +77,7 @@ Future<void> setupDI() async {
       endTime: doctor.endTime,
     ),
   );
+
+  // Main Feature
+  sl.registerFactory<MainCubit>(() => MainCubit());
 }

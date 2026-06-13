@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_complete_project/core/di/dependancy_injection.dart';
 import 'package:flutter_complete_project/core/routing/routes.dart';
-import 'package:flutter_complete_project/features/home/data/repos/home_repo.dart';
-import 'package:flutter_complete_project/features/home/ui/home/home_page.dart';
-import 'package:flutter_complete_project/features/home/ui/home/logic/home_cubit.dart';
+import 'package:flutter_complete_project/features/main/ui/logic/main_cubit.dart';
+import 'package:flutter_complete_project/features/main/ui/main_page.dart';
 import 'package:flutter_complete_project/features/home/ui/book_appointment/book_appointment_screen.dart';
 import 'package:flutter_complete_project/features/home/ui/book_appointment/logic/book_appointment_cubit.dart';
 import 'package:flutter_complete_project/features/home/ui/nearby_doctors/logic/nearby_doctors_cubit.dart';
@@ -31,10 +30,9 @@ class AppRouter {
     switch (route.name) {
       case '/':
         return MaterialPageRoute(
-          builder: (context) => BlocProvider<HomeCubit>(
-            create: (context) =>
-                HomeCubit(homeRepo: sl<HomeRepo>())..getHomeData(),
-            child: const HomePage(),
+          builder: (context) => BlocProvider<MainCubit>(
+            create: (context) => sl<MainCubit>(),
+            child: const MainPage(),
           ),
         );
       case Routes.onBoardingScreen:
@@ -57,10 +55,9 @@ class AppRouter {
         );
       case Routes.homeScreen:
         return MaterialPageRoute(
-          builder: (context) => BlocProvider<HomeCubit>(
-            create: (context) =>
-                HomeCubit(homeRepo: sl<HomeRepo>())..getHomeData(),
-            child: const HomePage(),
+          builder: (context) => BlocProvider<MainCubit>(
+            create: (context) => sl<MainCubit>(),
+            child: const MainPage(),
           ),
         );
       case Routes.notificationsPage:
