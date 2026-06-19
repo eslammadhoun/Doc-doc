@@ -4,6 +4,8 @@ import 'package:flutter_complete_project/core/di/dependancy_injection.dart';
 import 'package:flutter_complete_project/features/home/data/repos/home_repo.dart';
 import 'package:flutter_complete_project/features/home/ui/home/home_page.dart';
 import 'package:flutter_complete_project/features/home/ui/home/logic/home_cubit.dart';
+import 'package:flutter_complete_project/features/inbox/ui/inbox/inbox_screen.dart';
+import 'package:flutter_complete_project/features/inbox/ui/inbox/logic/inbox_cubit.dart';
 import 'package:flutter_complete_project/features/main/ui/logic/main_cubit.dart';
 import 'package:flutter_complete_project/features/main/ui/logic/main_state.dart';
 import 'package:flutter_complete_project/features/main/ui/widgets/bottom_nav_bar.dart';
@@ -27,7 +29,10 @@ class MainPage extends StatelessWidget {
                     HomeCubit(homeRepo: sl<HomeRepo>())..getHomeData(),
                 child: const HomePage(),
               ),
-              const PlaceholderScreen(title: 'Inbox'),
+              BlocProvider<InboxCubit>(
+                create: (_) => sl<InboxCubit>()..watchConversations(),
+                child: const InboxScreen(),
+              ),
               const PlaceholderScreen(title: 'Search'),
               const PlaceholderScreen(title: 'Appointments'),
               const PlaceholderScreen(title: 'Profile'),

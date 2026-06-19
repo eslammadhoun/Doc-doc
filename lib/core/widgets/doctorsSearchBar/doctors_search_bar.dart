@@ -1,18 +1,22 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_complete_project/core/helpers/spacing.dart';
 import 'package:flutter_complete_project/core/theming/colors.dart';
 import 'package:flutter_complete_project/core/theming/styles.dart';
 import 'package:flutter_complete_project/core/widgets/app_text_form_field.dart';
-import 'package:flutter_complete_project/features/home/ui/doctors/logic/doctors_cubit.dart';
-import 'package:flutter_complete_project/features/home/ui/doctors/widgets/doctors_sort_sheet.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
 class DoctorsSearchBar extends StatefulWidget {
-  const DoctorsSearchBar({super.key});
+  final Function(String searchQuery) searchFunction;
+  final VoidCallback? onSortTap;
+  final VoidCallback? onClearTap;
+  const DoctorsSearchBar({
+    super.key,
+    required this.searchFunction,
+    this.onSortTap,
+    this.onClearTap,
+  });
 
   @override
   State<DoctorsSearchBar> createState() => _DoctorsSearchBarState();
@@ -30,8 +34,8 @@ class _DoctorsSearchBarState extends State<DoctorsSearchBar> {
 
   void _onUserSearching({required String searchQuery}) {
     _debounce?.cancel();
-    _debounce = Timer(const Duration(milliseconds: 300), () {
-      context.read<DoctorsCubit>().searchDoctors(searchQuery: searchQuery);
+    _debounce = Timer(const Duration(milliseconds: 300), () async {
+      await widget.searchFunction(searchQuery);
     });
     setState(() {});
   }
@@ -46,7 +50,7 @@ class _DoctorsSearchBarState extends State<DoctorsSearchBar> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 16.w),
+      padding: EdgeInsets.zero,
       child: Row(
         children: [
           Expanded(
@@ -80,6 +84,10 @@ class _DoctorsSearchBarState extends State<DoctorsSearchBar> {
                   ? InkWell(
                       onTap: () {
                         searchController.clear();
+                        if (widget.onClearTap != null) {
+                          widget.onClearTap?.call();
+                          return;
+                        }
                         _onUserSearching(searchQuery: '');
                       },
                       child: Icon(Icons.cancel),
@@ -89,17 +97,7 @@ class _DoctorsSearchBarState extends State<DoctorsSearchBar> {
           ),
           horizontalSpace(12),
           GestureDetector(
-            onTap: () {
-              final DoctorsCubit doctorsCubit = context.read<DoctorsCubit>();
-              showModalBottomSheet(
-                context: context,
-                backgroundColor: Colors.transparent,
-                builder: (_) => BlocProvider.value(
-                  value: doctorsCubit,
-                  child: const DoctorsSortSheet(),
-                ),
-              );
-            },
+            onTap: widget.onSortTap,
             child: SvgPicture.asset(
               'assets/svgs/sort.svg',
               color: ColorsManager.darkBlue,

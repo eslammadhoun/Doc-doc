@@ -1,5 +1,6 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_complete_project/core/helpers/constants.dart';
 
 class AppPreferences {
   // Private Constractor as I don't want to allow creating an instance of this class itself
@@ -60,5 +61,17 @@ class AppPreferences {
   static Future<void> clearAllSecureData() async {
     FlutterSecureStorage flutterSecureStorage = FlutterSecureStorage();
     await flutterSecureStorage.deleteAll();
+  }
+
+  /// On iOS, Keychain entries (used by FlutterSecureStorage) survive app
+  /// uninstalls. SharedPreferences does not. We use that difference to
+  /// detect a fresh install and wipe any leftover secure data.
+  static Future<void> clearSecureDataOnFreshInstall() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    final bool hasRunBefore = sharedPreferences.getBool(Constants.hasRunBefore) ?? false;
+    if (!hasRunBefore) {
+      await clearAllSecureData();
+      await sharedPreferences.setBool(Constants.hasRunBefore, true);
+    }
   }
 }

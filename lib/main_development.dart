@@ -12,6 +12,7 @@ void main() async {
   await ScreenUtil.ensureScreenSize();
   await Firebase.initializeApp();
   await setupDI();
+  await AppPreferences.clearSecureDataOnFreshInstall();
   final bool isLoggedIn = await checkIfUserLoggedIn();
   runApp(DocApp(appRouter: AppRouter(), isLoggedIn: isLoggedIn));
 }

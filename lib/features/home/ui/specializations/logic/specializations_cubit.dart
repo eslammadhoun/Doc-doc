@@ -1,5 +1,4 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_complete_project/core/networkingv2/api_error_model.dart';
 import 'package:flutter_complete_project/core/networkingv2/api_result.dart';
 import 'package:flutter_complete_project/features/home/data/models/get_specializations_response_model.dart';
 import 'package:flutter_complete_project/features/home/data/repos/specializations_repo.dart';
@@ -18,7 +17,7 @@ class SpecializationsCubit
     getSpecializationsResult.when(
       success: (GetSpecializationsResponseModel response) =>
           emit(SpecializationsState.success(response)),
-      failure: (ApiErrorModel error) => emit(SpecializationsState.error(error)),
+      failure: (dynamic error) => emit(SpecializationsState.error(error)),
     );
   }
 }

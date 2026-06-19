@@ -254,6 +254,42 @@ class TextStyles {
     color: ColorsManager.textSecondary,
   );
 
+  static TextStyle font10RegularTextSecondary = TextStyle(
+    fontSize: 10.sp,
+    fontWeight: FontWeightHelper.regular,
+    color: ColorsManager.textSecondary,
+  );
+
+  static TextStyle font12MediumMediumGrey = TextStyle(
+    fontSize: 12.sp,
+    fontWeight: FontWeightHelper.medium,
+    color: ColorsManager.mediumGrey,
+  );
+
+  static TextStyle font14RegularWhite = TextStyle(
+    fontSize: 14.sp,
+    fontWeight: FontWeightHelper.regular,
+    color: Colors.white,
+  );
+
+  static TextStyle font12RegularTextSecondary = TextStyle(
+    fontSize: 12.sp,
+    fontWeight: FontWeightHelper.regular,
+    color: ColorsManager.textSecondary,
+  );
+
+  static TextStyle font10MediumGrey = TextStyle(
+    fontSize: 10.sp,
+    fontWeight: FontWeightHelper.medium,
+    color: ColorsManager.grey,
+  );
+
+  static TextStyle font14RegularMediumGrey = TextStyle(
+    fontSize: 14.sp,
+    fontWeight: FontWeightHelper.regular,
+    color: ColorsManager.mediumGrey,
+  );
+
   static TextStyle font12MediumPlaceholder = TextStyle(
     fontSize: 12.sp,
     fontWeight: FontWeightHelper.medium,

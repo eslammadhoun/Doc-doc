@@ -8,7 +8,8 @@ import 'package:flutter_complete_project/features/home/ui/doctors/logic/doctors_
 import 'package:flutter_complete_project/features/home/ui/doctors/logic/doctors_state.dart';
 import 'package:flutter_complete_project/features/home/ui/doctors/widgets/doctor_card.dart';
 import 'package:flutter_complete_project/features/home/ui/doctors/widgets/doctors_navbar.dart';
-import 'package:flutter_complete_project/features/home/ui/doctors/widgets/doctors_search_bar.dart';
+import 'package:flutter_complete_project/core/widgets/doctorsSearchBar/doctors_search_bar.dart';
+import 'package:flutter_complete_project/core/widgets/doctorsSearchBar/doctors_sort_sheet.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DoctorsScreen extends StatelessWidget {
@@ -27,7 +28,26 @@ class DoctorsScreen extends StatelessWidget {
             verticalSpace(16),
             DoctorsNavbar(specializationName: specializationName),
             verticalSpace(20),
-            const DoctorsSearchBar(),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.w),
+              child: DoctorsSearchBar(
+                searchFunction: (searchQuery) => context
+                    .read<DoctorsCubit>()
+                    .searchDoctors(searchQuery: searchQuery),
+                onSortTap: () {
+                  final cubit = context.read<DoctorsCubit>();
+                  showModalBottomSheet(
+                    context: context,
+                    backgroundColor: Colors.transparent,
+                    builder: (_) => DoctorsSortSheet(
+                      specialities: cubit.specialities,
+                      selectedSpeciality: cubit.selectedSpeciality,
+                      onApply: cubit.sortDoctors,
+                    ),
+                  );
+                },
+              ),
+            ),
             verticalSpace(16),
             Expanded(
               child: BlocBuilder<DoctorsCubit, DoctorsState>(

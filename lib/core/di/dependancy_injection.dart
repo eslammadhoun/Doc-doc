@@ -1,7 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_complete_project/core/models/doctor_model.dart';
 import 'package:flutter_complete_project/core/networkingv2/api_service.dart';
 import 'package:flutter_complete_project/core/networkingv2/dio_factory.dart';
+import 'package:flutter_complete_project/features/inbox/data/repos/inbox_repo.dart';
+import 'package:flutter_complete_project/features/inbox/data/repos/inbox_repo_firebase.dart';
+import 'package:flutter_complete_project/features/inbox/data/services/inbox_firebase.dart';
+import 'package:flutter_complete_project/features/inbox/ui/inbox/logic/inbox_cubit.dart';
 import 'package:flutter_complete_project/features/home/data/apis/home_api_service.dart';
 import 'package:flutter_complete_project/features/home/data/repos/home_repo.dart';
 import 'package:flutter_complete_project/features/home/data/repos/nearby_doctors_repo.dart';
@@ -16,6 +21,7 @@ import 'package:flutter_complete_project/features/auth/login/ui/logic/login_cubi
 import 'package:flutter_complete_project/features/auth/register/data/repos/register_repo.dart';
 import 'package:flutter_complete_project/features/home/ui/book_appointment/logic/book_appointment_cubit.dart';
 import 'package:flutter_complete_project/features/auth/register/ui/logic/register_cubit.dart';
+import 'package:flutter_complete_project/features/inbox/ui/new_message/logic/new_message_cubit.dart';
 import 'package:flutter_complete_project/features/main/ui/logic/main_cubit.dart';
 import 'package:get_it/get_it.dart';
 
@@ -80,4 +86,19 @@ Future<void> setupDI() async {
 
   // Main Feature
   sl.registerFactory<MainCubit>(() => MainCubit());
+
+  // Inbox Feature
+  sl.registerLazySingleton<FirebaseFirestore>(() => FirebaseFirestore.instance);
+  sl.registerLazySingleton<InboxFirebase>(
+    () => InboxFirebase(firebaseFirestore: sl<FirebaseFirestore>()),
+  );
+  sl.registerLazySingleton<InboxRepo>(
+    () => InboxRepoFirebase(inboxFirebaseDatasource: sl<InboxFirebase>()),
+  );
+  sl.registerFactory<InboxCubit>(() => InboxCubit(inboxRepo: sl<InboxRepo>()));
+
+  // == New Message Page ==
+  sl.registerFactory<NewMessageCubit>(
+    () => NewMessageCubit(doctorsRepo: sl<DoctorsRepo>()),
+  );
 }
