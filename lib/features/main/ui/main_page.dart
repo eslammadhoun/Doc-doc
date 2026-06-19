@@ -10,6 +10,8 @@ import 'package:flutter_complete_project/features/main/ui/logic/main_cubit.dart'
 import 'package:flutter_complete_project/features/main/ui/logic/main_state.dart';
 import 'package:flutter_complete_project/features/main/ui/widgets/bottom_nav_bar.dart';
 import 'package:flutter_complete_project/features/main/ui/widgets/placeholder_screen.dart';
+import 'package:flutter_complete_project/features/search/ui/logic/search_cubit.dart';
+import 'package:flutter_complete_project/features/search/ui/search_page.dart';
 
 class MainPage extends StatelessWidget {
   const MainPage({super.key});
@@ -33,7 +35,11 @@ class MainPage extends StatelessWidget {
                 create: (_) => sl<InboxCubit>()..watchConversations(),
                 child: const InboxScreen(),
               ),
-              const PlaceholderScreen(title: 'Search'),
+              BlocProvider(
+                create: (BuildContext context) =>
+                    sl<SearchCubit>()..getRecentSearches(),
+                child: const SearchPage(),
+              ),
               const PlaceholderScreen(title: 'Appointments'),
               const PlaceholderScreen(title: 'Profile'),
             ],
