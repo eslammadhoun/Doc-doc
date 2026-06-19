@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:flutter_complete_project/core/helpers/app_preferences.dart';
 import 'package:flutter_complete_project/core/helpers/constants.dart';
-import 'package:flutter_complete_project/core/networkingv2/api_error_model.dart';
 import 'package:flutter_complete_project/core/networkingv2/dio_factory.dart';
 import 'package:flutter_complete_project/core/networkingv2/api_result.dart';
 import 'package:flutter_complete_project/features/auth/login/data/models/login_request_body.dart';
@@ -27,16 +27,24 @@ class LoginCubit extends Cubit<LoginState> {
       success: (LoginResponse loginResponse) async {
         final String token = loginResponse.userData?.token ?? '';
         await secureUserToken(token);
+        await saveUserId(token);
         DioFactory.setTokenIntoHeadersAfterLogin(token);
         emit(LoginState.success(loginResponse));
       },
-      failure: (ApiErrorModel error) => emit(LoginState.error(error)),
+      failure: (dynamic error) => emit(LoginState.error(error)),
     );
   }
 
   // Safe User Token in Sharedprferences
   Future<void> secureUserToken(String token) async {
     await AppPreferences.setSecureString(Constants.userToken, token);
+  }
+
+  // Decode the JWT 'sub' claim and persist it as the current user id
+  Future<void> saveUserId(String token) async {
+    final Map<String, dynamic> decodedToken = JwtDecoder.decode(token);
+    final String userId = decodedToken['sub']?.toString() ?? '';
+    await AppPreferences.saveData(Constants.userId, userId);
   }
 
   @override

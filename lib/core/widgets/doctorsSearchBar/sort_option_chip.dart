@@ -28,7 +28,9 @@ class SortOptionChip extends StatelessWidget {
           vertical: 10.h,
         ),
         decoration: BoxDecoration(
-          color: isSelected ? ColorsManager.mainBlue : ColorsManager.surfaceGrey,
+          color: isSelected
+              ? ColorsManager.mainBlue
+              : ColorsManager.surfaceGrey,
           borderRadius: BorderRadius.circular(24.r),
         ),
         child: Row(

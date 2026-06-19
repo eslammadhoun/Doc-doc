@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_complete_project/core/helpers/spacing.dart';
 import 'package:flutter_complete_project/core/theming/colors.dart';
 import 'package:flutter_complete_project/core/theming/styles.dart';
-import 'package:flutter_complete_project/features/home/ui/doctors/logic/doctors_cubit.dart';
-import 'package:flutter_complete_project/features/home/ui/doctors/widgets/sort_option_chip.dart';
+import 'package:flutter_complete_project/core/widgets/doctorsSearchBar/sort_option_chip.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DoctorsSortSheet extends StatefulWidget {
-  const DoctorsSortSheet({super.key});
+  final List<String> specialities;
+  final String selectedSpeciality;
+  final ValueChanged<String> onApply;
+
+  const DoctorsSortSheet({
+    super.key,
+    required this.specialities,
+    required this.selectedSpeciality,
+    required this.onApply,
+  });
 
   @override
   State<DoctorsSortSheet> createState() => _DoctorsSortSheetState();
@@ -24,8 +31,8 @@ class _DoctorsSortSheetState extends State<DoctorsSortSheet> {
   @override
   void initState() {
     super.initState();
-    _specialities = context.read<DoctorsCubit>().specialities;
-    _selectedSpeciality = context.read<DoctorsCubit>().selectedSpeciality;
+    _specialities = widget.specialities;
+    _selectedSpeciality = widget.selectedSpeciality;
   }
 
   @override
@@ -93,9 +100,7 @@ class _DoctorsSortSheetState extends State<DoctorsSortSheet> {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () {
-                    context.read<DoctorsCubit>().sortDoctors(
-                      _selectedSpeciality,
-                    );
+                    widget.onApply(_selectedSpeciality);
                     Navigator.pop(context);
                   },
                   style: ElevatedButton.styleFrom(

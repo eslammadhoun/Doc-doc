@@ -26,7 +26,7 @@ class BottomNavBar extends StatelessWidget {
         clipBehavior: Clip.none,
         children: [
           Container(
-            height: 80.h,
+            height: 70.h,
             decoration: const BoxDecoration(
               color: Colors.white,
               boxShadow: [
