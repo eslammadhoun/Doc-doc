@@ -23,6 +23,17 @@ class DoctorWidget extends StatelessWidget {
         margin: EdgeInsets.only(bottom: 12.h),
         padding: EdgeInsets.all(8.r),
         width: double.infinity,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(16.r),
+          boxShadow: [
+            BoxShadow(
+              color: Color(0xff000000).withAlpha(10),
+              blurRadius: 100,
+              offset: Offset(0, -5),
+            ),
+          ],
+        ),
         child: Row(
           children: [
             SizedBox(

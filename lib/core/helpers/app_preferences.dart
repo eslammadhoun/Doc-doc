@@ -35,6 +35,8 @@ class AppPreferences {
       case const (bool):
         await sharedPreferences.setBool(key, value);
         break;
+      case const (List<String>):
+        await sharedPreferences.setStringList(key, value);
       default:
         return;
     }
@@ -43,6 +45,11 @@ class AppPreferences {
   static Future<String> getString(String key) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     return sharedPreferences.getString(key) ?? '';
+  }
+
+  static Future<List<String>?> getListString(String key) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    return sharedPreferences.getStringList(key);
   }
 
   /// Saves A [value] with a [key] in Flutter Secure Storage
@@ -68,7 +75,8 @@ class AppPreferences {
   /// detect a fresh install and wipe any leftover secure data.
   static Future<void> clearSecureDataOnFreshInstall() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    final bool hasRunBefore = sharedPreferences.getBool(Constants.hasRunBefore) ?? false;
+    final bool hasRunBefore =
+        sharedPreferences.getBool(Constants.hasRunBefore) ?? false;
     if (!hasRunBefore) {
       await clearAllSecureData();
       await sharedPreferences.setBool(Constants.hasRunBefore, true);
