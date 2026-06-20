@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_complete_project/core/di/dependancy_injection.dart';
+import 'package:flutter_complete_project/features/appointments/ui/logic/appointments_cubit.dart';
 import 'package:flutter_complete_project/features/home/data/repos/home_repo.dart';
 import 'package:flutter_complete_project/features/home/ui/home/home_page.dart';
 import 'package:flutter_complete_project/features/home/ui/home/logic/home_cubit.dart';
@@ -12,6 +13,7 @@ import 'package:flutter_complete_project/features/main/ui/widgets/bottom_nav_bar
 import 'package:flutter_complete_project/features/main/ui/widgets/placeholder_screen.dart';
 import 'package:flutter_complete_project/features/search/ui/logic/search_cubit.dart';
 import 'package:flutter_complete_project/features/search/ui/search_page.dart';
+import 'package:flutter_complete_project/features/appointments/ui/my_appointments_page.dart';
 
 class MainPage extends StatelessWidget {
   const MainPage({super.key});
@@ -40,7 +42,11 @@ class MainPage extends StatelessWidget {
                     sl<SearchCubit>()..getRecentSearches(),
                 child: const SearchPage(),
               ),
-              const PlaceholderScreen(title: 'Appointments'),
+              BlocProvider(
+                create: (BuildContext context) =>
+                    sl<AppointmentsCubit>()..getAppointments(),
+                child: const MyAppointmentsPage(),
+              ),
               const PlaceholderScreen(title: 'Profile'),
             ],
           );

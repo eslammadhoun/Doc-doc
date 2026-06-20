@@ -3,6 +3,11 @@ import 'package:dio/dio.dart';
 import 'package:flutter_complete_project/core/models/doctor_model.dart';
 import 'package:flutter_complete_project/core/networkingv2/api_service.dart';
 import 'package:flutter_complete_project/core/networkingv2/dio_factory.dart';
+import 'package:flutter_complete_project/features/appointments/data/repos/appointments_repo.dart';
+import 'package:flutter_complete_project/features/appointments/data/repos/appointments_repo_imp.dart';
+import 'package:flutter_complete_project/features/appointments/data/services/appointments_api_service.dart';
+import 'package:flutter_complete_project/features/appointments/ui/logic/appointments_cubit.dart';
+import 'package:flutter_complete_project/features/home/data/repos/book_appointment_repo.dart';
 import 'package:flutter_complete_project/features/inbox/data/repos/inbox_repo.dart';
 import 'package:flutter_complete_project/features/inbox/data/repos/inbox_repo_firebase.dart';
 import 'package:flutter_complete_project/features/inbox/data/services/inbox_firebase.dart';
@@ -80,9 +85,14 @@ Future<void> setupDI() async {
     ),
   );
 
+  sl.registerLazySingleton<BookAppointmentRepo>(
+    () => BookAppointmentRepo(homeApiService: sl<HomeApiService>()),
+  );
+
   // Book Appointment Feature
   sl.registerFactoryParam<BookAppointmentCubit, DoctorModel, void>(
     (doctor, _) => BookAppointmentCubit(
+      bookAppointmentRepo: sl<BookAppointmentRepo>(),
       startTime: doctor.startTime,
       endTime: doctor.endTime,
     ),
@@ -113,5 +123,18 @@ Future<void> setupDI() async {
   );
   sl.registerFactory<SearchCubit>(
     () => SearchCubit(searchRepo: sl<SearchRepo>()),
+  );
+
+  // == Appointments Feature ==
+  sl.registerLazySingleton<AppointmentsApiService>(
+    () => AppointmentsApiService(dio),
+  );
+  sl.registerLazySingleton<AppointmentsRepo>(
+    () => AppointmentsRepoImp(
+      appointmentsApiService: sl<AppointmentsApiService>(),
+    ),
+  );
+  sl.registerFactory<AppointmentsCubit>(
+    () => AppointmentsCubit(appointmentsRepo: sl<AppointmentsRepo>()),
   );
 }

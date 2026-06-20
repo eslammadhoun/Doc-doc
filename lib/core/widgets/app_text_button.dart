@@ -12,6 +12,7 @@ class AppTextButton extends StatelessWidget {
   final String buttonText;
   final TextStyle textStyle;
   final VoidCallback onPressed;
+  final Widget? child;
 
   const AppTextButton({
     super.key,
@@ -24,6 +25,7 @@ class AppTextButton extends StatelessWidget {
     required this.buttonText,
     required this.textStyle,
     required this.onPressed,
+    this.child,
   });
 
   @override
@@ -49,7 +51,7 @@ class AppTextButton extends StatelessWidget {
         ),
       ),
       onPressed: onPressed,
-      child: Text(buttonText, style: textStyle),
+      child: child ?? Text(buttonText, style: textStyle),
     );
   }
 }
