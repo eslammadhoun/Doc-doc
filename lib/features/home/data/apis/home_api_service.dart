@@ -34,4 +34,7 @@ abstract class HomeApiService {
   Future<GetDoctorsResponseModel> searchDoctors({
     @Path('name') required String? searchQuery,
   });
+
+  @POST(HomeApiConstants.storeAppointment)
+  Future<void> bookAppointment(@Body() Map<String, dynamic> appointmentData);
 }

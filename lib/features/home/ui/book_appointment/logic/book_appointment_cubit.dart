@@ -1,15 +1,22 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_complete_project/core/networkingv2/api_result.dart';
+import 'package:flutter_complete_project/features/home/data/repos/book_appointment_repo.dart';
 import 'package:flutter_complete_project/features/home/ui/book_appointment/logic/book_appointment_state.dart';
 
 class BookAppointmentCubit extends Cubit<BookAppointmentState> {
   static const int _totalDays = 14;
   static const int _visibleDays = 5;
   static const int _slotDurationMinutes = 30;
-
-  BookAppointmentCubit({String? startTime, String? endTime})
-    : super(
-        BookAppointmentState(timeSlots: _generateTimeSlots(startTime, endTime)),
-      );
+  final BookAppointmentRepo bookAppointmentRepo;
+  BookAppointmentCubit({
+    String? startTime,
+    String? endTime,
+    required this.bookAppointmentRepo,
+  }) : super(
+         BookAppointmentState(
+           timeSlots: _generateTimeSlots(startTime, endTime),
+         ),
+       );
 
   void selectDate(int index) => emit(state.copyWith(selectedDateIndex: index));
 
@@ -79,5 +86,38 @@ class BookAppointmentCubit extends Cubit<BookAppointmentState> {
     final String hourStr = hour12.toString().padLeft(2, '0');
     final String minuteStr = minute.toString().padLeft(2, '0');
     return '$hourStr.$minuteStr $period';
+  }
+
+  String getFormattedStartTime() {
+    final date = DateTime.now().add(Duration(days: state.selectedDateIndex));
+    final timeSlot = state.timeSlots[state.selectedTimeIndex];
+    final parts = timeSlot.split(' ');
+    final timeParts = parts[0].split('.');
+    var hour = int.parse(timeParts[0]);
+    final minute = int.parse(timeParts[1]);
+    final period = parts[1];
+    if (period == 'PM' && hour != 12) hour += 12;
+    if (period == 'AM' && hour == 12) hour = 0;
+    final dateTime = DateTime(date.year, date.month, date.day, hour, minute);
+    return '${dateTime.year}-${dateTime.month.toString().padLeft(2, '0')}-${dateTime.day.toString().padLeft(2, '0')} ${dateTime.hour.toString().padLeft(2, '0')}:${dateTime.minute.toString().padLeft(2, '0')}';
+  }
+
+  Future<void> bookAppointment({
+    required String doctorId,
+    required String startTime,
+  }) async {
+    emit(state.copyWith(bookingStatus: BookingStatus.loading));
+    final ApiResult bookAppointmentResult = await bookAppointmentRepo
+        .bookAppointment(doctorId: doctorId, startTime: startTime);
+    bookAppointmentResult.when(
+      success: (void r) =>
+          emit(state.copyWith(bookingStatus: BookingStatus.success)),
+      failure: (dynamic error) => emit(
+        state.copyWith(
+          bookingStatus: BookingStatus.failure,
+          bookingAppointmentErrorMessage: error,
+        ),
+      ),
+    );
   }
 }

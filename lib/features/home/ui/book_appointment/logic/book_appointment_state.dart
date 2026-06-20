@@ -4,6 +4,8 @@ enum PaymentMethod { creditCard, bankTransfer, paypal }
 
 enum CardType { masterCard, americanExpress, capitalOne, barclays }
 
+enum BookingStatus { initial, loading, success, failure }
+
 class BookAppointmentState {
   final int currentStep;
   final int selectedDateIndex;
@@ -13,7 +15,8 @@ class BookAppointmentState {
   final List<String> timeSlots;
   final PaymentMethod selectedPaymentMethod;
   final CardType selectedCardType;
-
+  final BookingStatus bookingStatus;
+  final String? bookingAppointmentErrorMessage;
   const BookAppointmentState({
     this.currentStep = 1,
     this.selectedDateIndex = 0,
@@ -23,6 +26,8 @@ class BookAppointmentState {
     this.timeSlots = const [],
     this.selectedPaymentMethod = PaymentMethod.creditCard,
     this.selectedCardType = CardType.masterCard,
+    this.bookingStatus = BookingStatus.initial,
+    this.bookingAppointmentErrorMessage,
   });
 
   BookAppointmentState copyWith({
@@ -34,6 +39,8 @@ class BookAppointmentState {
     List<String>? timeSlots,
     PaymentMethod? selectedPaymentMethod,
     CardType? selectedCardType,
+    BookingStatus? bookingStatus,
+    String? bookingAppointmentErrorMessage,
   }) => BookAppointmentState(
     currentStep: currentStep ?? this.currentStep,
     selectedDateIndex: selectedDateIndex ?? this.selectedDateIndex,
@@ -43,5 +50,8 @@ class BookAppointmentState {
     timeSlots: timeSlots ?? this.timeSlots,
     selectedPaymentMethod: selectedPaymentMethod ?? this.selectedPaymentMethod,
     selectedCardType: selectedCardType ?? this.selectedCardType,
+    bookingStatus: bookingStatus ?? this.bookingStatus,
+    bookingAppointmentErrorMessage:
+        bookingAppointmentErrorMessage ?? this.bookingAppointmentErrorMessage,
   );
 }

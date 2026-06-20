@@ -290,6 +290,18 @@ class TextStyles {
     color: ColorsManager.mediumGrey,
   );
 
+  static TextStyle font12SemiBoldBlue = TextStyle(
+    fontSize: 12.sp,
+    fontWeight: FontWeightHelper.semiBold,
+    color: ColorsManager.mainBlue,
+  );
+
+  static TextStyle font12SemiBoldWhite = TextStyle(
+    fontSize: 12.sp,
+    fontWeight: FontWeightHelper.semiBold,
+    color: Colors.white,
+  );
+
   static TextStyle font12MediumPlaceholder = TextStyle(
     fontSize: 12.sp,
     fontWeight: FontWeightHelper.medium,

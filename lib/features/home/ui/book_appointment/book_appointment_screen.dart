@@ -25,7 +25,39 @@ class BookAppointmentScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return BlocListener<BookAppointmentCubit, BookAppointmentState>(
+      listenWhen: (previous, current) =>
+          previous.bookingStatus != current.bookingStatus,
+      listener: (context, state) {
+        if (state.bookingStatus == BookingStatus.loading) {
+          showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (_) => const Center(child: CircularProgressIndicator()),
+          );
+        } else if (state.bookingStatus == BookingStatus.success) {
+          Navigator.of(context).pop();
+          final cubit = context.read<BookAppointmentCubit>();
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (_) => BlocProvider.value(
+                value: cubit,
+                child: BookingDetailsScreen(doctor: doctor),
+              ),
+            ),
+          );
+        } else if (state.bookingStatus == BookingStatus.failure) {
+          Navigator.of(context).pop();
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                state.bookingAppointmentErrorMessage ?? 'Booking failed',
+              ),
+            ),
+          );
+        }
+      },
+      child: Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
         bottom: false,
@@ -91,13 +123,9 @@ class BookAppointmentScreen extends StatelessWidget {
                       subtotal: doctor.price ?? 0,
                       onBookNow: () {
                         final cubit = context.read<BookAppointmentCubit>();
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (_) => BlocProvider.value(
-                              value: cubit,
-                              child: BookingDetailsScreen(doctor: doctor),
-                            ),
-                          ),
+                        cubit.bookAppointment(
+                          doctorId: doctor.id.toString(),
+                          startTime: cubit.getFormattedStartTime(),
                         );
                       },
                     )
@@ -123,6 +151,7 @@ class BookAppointmentScreen extends StatelessWidget {
           ],
         ),
       ),
+    ),
     );
   }
 }
