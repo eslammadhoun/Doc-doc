@@ -16,7 +16,6 @@ class AppointmentsCubit extends Cubit<AppointmentsState> {
 
     final ApiResult<GetAppointmentsResponseModel> getAppointmentsResult =
         await appointmentsRepo.getAppointments();
-    print('Get Appointments Result: $getAppointmentsResult');
     getAppointmentsResult.when(
       success: (responseModel) => emit(
         state.copyWith(
