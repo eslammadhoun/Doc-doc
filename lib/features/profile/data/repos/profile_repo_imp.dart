@@ -24,8 +24,7 @@ class ProfileRepoImp implements ProfileRepo {
   Future<ApiResult<void>> updateProfile(UpdateProfileRequestBody body) async {
     try {
       await profileApiService.updateProfile(body);
-      // ignore: void_checks
-      return ApiResult.success(true);
+      return ApiResult.success(null);
     } catch (error) {
       return ApiResult.failure(ErrorHandler.handle(error));
     }
@@ -35,8 +34,7 @@ class ProfileRepoImp implements ProfileRepo {
   Future<ApiResult<void>> logout() async {
     try {
       await profileApiService.logout();
-      // ignore: void_checks
-      return ApiResult.success(true);
+      return ApiResult.success(null);
     } catch (error) {
       return ApiResult.failure(ErrorHandler.handle(error));
     }

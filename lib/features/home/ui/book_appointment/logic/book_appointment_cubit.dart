@@ -107,15 +107,15 @@ class BookAppointmentCubit extends Cubit<BookAppointmentState> {
     required String startTime,
   }) async {
     emit(state.copyWith(bookingStatus: BookingStatus.loading));
-    final ApiResult bookAppointmentResult = await bookAppointmentRepo
+    final ApiResult<void> bookAppointmentResult = await bookAppointmentRepo
         .bookAppointment(doctorId: doctorId, startTime: startTime);
     bookAppointmentResult.when(
-      success: (void r) =>
+      success: (_) =>
           emit(state.copyWith(bookingStatus: BookingStatus.success)),
-      failure: (dynamic error) => emit(
+      failure: (error) => emit(
         state.copyWith(
           bookingStatus: BookingStatus.failure,
-          bookingAppointmentErrorMessage: error,
+          bookingAppointmentErrorMessage: error.getAllMessages(),
         ),
       ),
     );

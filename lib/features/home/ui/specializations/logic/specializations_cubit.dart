@@ -17,7 +17,7 @@ class SpecializationsCubit
     getSpecializationsResult.when(
       success: (GetSpecializationsResponseModel response) =>
           emit(SpecializationsState.success(response)),
-      failure: (dynamic error) => emit(SpecializationsState.error(error)),
+      failure: (error) => emit(SpecializationsState.error(error)),
     );
   }
 }

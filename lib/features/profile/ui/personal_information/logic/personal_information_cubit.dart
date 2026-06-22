@@ -19,7 +19,7 @@ class PersonalInformationCubit extends Cubit<PersonalInformationState> {
       success: (_) => emit(
         state.copyWith(updateStatus: UpdateProfileStatus.success),
       ),
-      failure: (dynamic error) => emit(
+      failure: (error) => emit(
         state.copyWith(
           updateStatus: UpdateProfileStatus.failure,
           updateErrorModel: error,

@@ -24,7 +24,7 @@ class ProfileCubit extends Cubit<ProfileState> {
           user: userProfileModel.user[0],
         ),
       ),
-      failure: (dynamic error) => emit(
+      failure: (error) => emit(
         state.copyWith(
           getUserProfileStatus: ProfileRequestStatus.failure,
           getUserProfileErrorModel: error,
@@ -46,7 +46,7 @@ class ProfileCubit extends Cubit<ProfileState> {
           (route) => false,
         );
       },
-      failure: (dynamic error) => emit(
+      failure: (error) => emit(
         state.copyWith(
           logoutStatus: ProfileRequestStatus.failure,
           logoutErrorModel: error,

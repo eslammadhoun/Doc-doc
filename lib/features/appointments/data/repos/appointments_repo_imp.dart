@@ -15,7 +15,6 @@ class AppointmentsRepoImp implements AppointmentsRepo {
           await appointmentsApiService.getAppointments();
       return ApiResult.success(responseModel);
     } catch (error) {
-      print('Get Appointments error: $error');
       return ApiResult.failure(ErrorHandler.handle(error));
     }
   }

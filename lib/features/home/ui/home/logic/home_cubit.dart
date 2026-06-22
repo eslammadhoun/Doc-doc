@@ -15,7 +15,7 @@ class HomeCubit extends Cubit<HomeState<HomeResponseModel>> {
     getHomeDataResult.when(
       success: (HomeResponseModel response) =>
           emit(HomeState.success(response)),
-      failure: (dynamic error) => emit(HomeState.error(error)),
+      failure: (error) => emit(HomeState.error(error)),
     );
   }
 }

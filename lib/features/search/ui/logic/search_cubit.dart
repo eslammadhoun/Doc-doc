@@ -1,6 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_complete_project/core/models/doctor_model.dart';
-import 'package:flutter_complete_project/core/networkingv2/api_error_model.dart';
 import 'package:flutter_complete_project/core/networkingv2/api_result.dart';
 import 'package:flutter_complete_project/features/search/data/models/search_response_model.dart';
 import 'package:flutter_complete_project/features/search/data/repos/search_repo.dart';
@@ -37,9 +36,7 @@ class SearchCubit extends Cubit<SearchState> {
       failure: (error) => emit(
         state.copyWith(
           searchStatus: SearchFeatureRequestStatus.failure,
-          searchErrorMessage: error.runtimeType == ApiErrorModel
-              ? error.message
-              : error.toString(),
+          searchErrorMessage: error.getAllMessages(),
         ),
       ),
     );
@@ -63,7 +60,7 @@ class SearchCubit extends Cubit<SearchState> {
       failure: (error) => emit(
         state.copyWith(
           getRecentSearches: SearchFeatureRequestStatus.failure,
-          getRecentSearchesErrorMessage: error,
+          getRecentSearchesErrorMessage: error.getAllMessages(),
         ),
       ),
     );
