@@ -24,6 +24,11 @@ import 'package:flutter_complete_project/features/auth/register/ui/logic/registe
 import 'package:flutter_complete_project/features/auth/register/ui/register_screen.dart';
 import 'package:flutter_complete_project/features/inbox/data/models/conversation_model.dart';
 import 'package:flutter_complete_project/features/inbox/ui/conversation/conversation_screen.dart';
+import 'package:flutter_complete_project/features/profile/ui/personal_information/personal_information_page.dart';
+import 'package:flutter_complete_project/features/profile/ui/settings/faq/faq_page.dart';
+import 'package:flutter_complete_project/features/profile/ui/settings/notification_settings/notification_settings_page.dart';
+import 'package:flutter_complete_project/features/profile/ui/settings/security/security_page.dart';
+import 'package:flutter_complete_project/features/profile/ui/settings/settings_page.dart';
 
 class AppRouter {
   static GlobalKey<NavigatorState> globalNavigatorKey =
@@ -139,6 +144,20 @@ class AppRouter {
             create: (_) => sl<SpecializationsCubit>()..getSpecializations(),
             child: const SpecializationsScreen(),
           ),
+        );
+      case Routes.settingsScreen:
+        return MaterialPageRoute(builder: (_) => const SettingsPage());
+      case Routes.notificationSettingsScreen:
+        return MaterialPageRoute(
+          builder: (_) => const NotificationSettingsPage(),
+        );
+      case Routes.faqScreen:
+        return MaterialPageRoute(builder: (_) => const FaqPage());
+      case Routes.securityScreen:
+        return MaterialPageRoute(builder: (_) => const SecurityPage());
+      case Routes.personalInformationScreen:
+        return MaterialPageRoute(
+          builder: (_) => const PersonalInformationPage(),
         );
       default:
         return MaterialPageRoute(
