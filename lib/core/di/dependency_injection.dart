@@ -32,6 +32,7 @@ import 'package:flutter_complete_project/features/profile/data/repos/profile_rep
 import 'package:flutter_complete_project/features/profile/data/repos/profile_repo_imp.dart';
 import 'package:flutter_complete_project/features/profile/data/services/profile_api_service.dart';
 import 'package:flutter_complete_project/features/profile/ui/logic/profile_cubit.dart';
+import 'package:flutter_complete_project/features/profile/ui/personal_information/logic/personal_information_cubit.dart';
 import 'package:flutter_complete_project/features/search/data/repos/search_repo.dart';
 import 'package:flutter_complete_project/features/search/data/repos/search_repo_imp.dart';
 import 'package:flutter_complete_project/features/search/data/services/search_api_service.dart';
@@ -149,5 +150,8 @@ Future<void> setupDI() async {
   );
   sl.registerFactory<ProfileCubit>(
     () => ProfileCubit(profileRepo: sl<ProfileRepo>()),
+  );
+  sl.registerFactory<PersonalInformationCubit>(
+    () => PersonalInformationCubit(profileRepo: sl<ProfileRepo>()),
   );
 }

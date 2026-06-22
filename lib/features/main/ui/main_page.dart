@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_complete_project/core/di/dependancy_injection.dart';
+import 'package:flutter_complete_project/core/di/dependency_injection.dart';
 import 'package:flutter_complete_project/features/appointments/ui/logic/appointments_cubit.dart';
 import 'package:flutter_complete_project/features/home/data/repos/home_repo.dart';
 import 'package:flutter_complete_project/features/home/ui/home/home_page.dart';

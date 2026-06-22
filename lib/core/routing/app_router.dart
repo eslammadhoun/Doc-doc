@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_complete_project/core/di/dependancy_injection.dart';
+import 'package:flutter_complete_project/core/di/dependency_injection.dart';
 import 'package:flutter_complete_project/core/routing/routes.dart';
 import 'package:flutter_complete_project/features/inbox/ui/conversation/logic/conversation_cubit.dart';
 import 'package:flutter_complete_project/features/inbox/data/repos/inbox_repo.dart';
@@ -16,6 +16,7 @@ import 'package:flutter_complete_project/features/home/ui/specializations/specia
 import 'package:flutter_complete_project/features/home/ui/doctors/logic/doctors_cubit.dart';
 import 'package:flutter_complete_project/features/home/ui/doctors/doctors_screen.dart';
 import 'package:flutter_complete_project/core/models/doctor_model.dart';
+import 'package:flutter_complete_project/core/models/user_model.dart';
 import 'package:flutter_complete_project/features/home/ui/doctor_details/doctor_details_screen.dart';
 import 'package:flutter_complete_project/features/auth/login/ui/logic/login_cubit.dart';
 import 'package:flutter_complete_project/features/auth/login/ui/login_screen.dart';
@@ -24,6 +25,9 @@ import 'package:flutter_complete_project/features/auth/register/ui/logic/registe
 import 'package:flutter_complete_project/features/auth/register/ui/register_screen.dart';
 import 'package:flutter_complete_project/features/inbox/data/models/conversation_model.dart';
 import 'package:flutter_complete_project/features/inbox/ui/conversation/conversation_screen.dart';
+import 'package:flutter_complete_project/features/profile/ui/medical_record/medical_record_page.dart';
+import 'package:flutter_complete_project/features/profile/ui/payment/payment_page.dart';
+import 'package:flutter_complete_project/features/profile/ui/personal_information/logic/personal_information_cubit.dart';
 import 'package:flutter_complete_project/features/profile/ui/personal_information/personal_information_page.dart';
 import 'package:flutter_complete_project/features/profile/ui/settings/faq/faq_page.dart';
 import 'package:flutter_complete_project/features/profile/ui/settings/notification_settings/notification_settings_page.dart';
@@ -34,7 +38,7 @@ class AppRouter {
   static GlobalKey<NavigatorState> globalNavigatorKey =
       GlobalKey<NavigatorState>();
   static Route generateRoute(RouteSettings route) {
-    final _ = route.arguments;
+    final arguments = route.arguments;
 
     switch (route.name) {
       case '/':
@@ -155,9 +159,17 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const FaqPage());
       case Routes.securityScreen:
         return MaterialPageRoute(builder: (_) => const SecurityPage());
+      case Routes.medicalRecordScreen:
+        return MaterialPageRoute(builder: (_) => const MedicalRecordPage());
+      case Routes.paymentScreen:
+        return MaterialPageRoute(builder: (_) => const PaymentPage());
       case Routes.personalInformationScreen:
+        final user = arguments as UserModel;
         return MaterialPageRoute(
-          builder: (_) => const PersonalInformationPage(),
+          builder: (_) => BlocProvider(
+            create: (_) => sl<PersonalInformationCubit>(),
+            child: PersonalInformationPage(user: user),
+          ),
         );
       default:
         return MaterialPageRoute(
