@@ -336,8 +336,8 @@ flutter test
 
 **Eslam Madhoun**
 
-- Email: alimadhounvipsa@gmail.com
-- GitHub: [github.com/your-username](https://github.com/your-username)
+- Email: eslammadhoun3@gmail.com
+- GitHub: [github.com/eslammadhoun](https://github.com/eslammadhoun)
 
 ---
 
