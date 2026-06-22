@@ -1,0 +1,25 @@
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="24" height="24" fill="#1E1E1E"/>
+<g id="Setting Screen">
+<rect width="375" height="812" transform="translate(-24 -384)" fill="white"/>
+<g id="Frame 1000005784">
+<g id="Frame 1000005788">
+<mask id="path-1-inside-1_0_1" fill="white">
+<path d="M0 -12H327V36H0V-12Z"/>
+</mask>
+<path d="M327 36V35H0V36V37H327V36Z" fill="#EDEDED" mask="url(#path-1-inside-1_0_1)"/>
+<g id="Frame 1000005781">
+<g id="logout">
+<g id="vuesax/linear/logout">
+<g id="logout_2">
+<path id="Vector" d="M17.44 14.62L20 12.06L17.44 9.5" stroke="#FF4C5E" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_2" d="M9.76001 12.0596H19.93" stroke="#FF4C5E" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_3" d="M11.76 20C7.34001 20 3.76001 17 3.76001 12C3.76001 7 7.34001 4 11.76 4" stroke="#FF4C5E" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</svg>

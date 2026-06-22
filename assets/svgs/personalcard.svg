@@ -1,0 +1,29 @@
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="24" height="24" fill="#1E1E1E"/>
+<g id="Profile">
+<rect width="375" height="812" transform="translate(-32 -457)" fill="#247CFF"/>
+<g id="Content">
+<g id="Personal Information">
+<mask id="path-1-inside-1_0_1" fill="white">
+<path d="M-8 -8H319V48H-8V-8Z"/>
+</mask>
+<path d="M319 48V47H-8V48V49H319V48Z" fill="#EDEDED" mask="url(#path-1-inside-1_0_1)"/>
+<g id="Icon">
+<rect x="-8" y="-8" width="40" height="40" rx="16" fill="#EAF2FF"/>
+<g id="personalcard">
+<g id="vuesax/linear/personalcard">
+<g id="personalcard_2">
+<path id="Vector" d="M17 21H7C3 21 2 20 2 16V8C2 4 3 3 7 3H17C21 3 22 4 22 8V16C22 20 21 21 17 21Z" stroke="#247CFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_2" d="M14 8H19" stroke="#247CFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_3" d="M15 12H19" stroke="#247CFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_4" d="M17 16H19" stroke="#247CFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_5" d="M8.5 11.2899C9.49963 11.2899 10.31 10.4796 10.31 9.47992C10.31 8.48029 9.49963 7.66992 8.5 7.66992C7.50036 7.66992 6.69 8.48029 6.69 9.47992C6.69 10.4796 7.50036 11.2899 8.5 11.2899Z" stroke="#247CFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_6" d="M12 16.3298C11.86 14.8798 10.71 13.7398 9.26 13.6098C8.76 13.5598 8.25 13.5598 7.74 13.6098C6.29 13.7498 5.14 14.8798 5 16.3298" stroke="#247CFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</svg>

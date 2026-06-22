@@ -28,6 +28,10 @@ import 'package:flutter_complete_project/features/home/ui/book_appointment/logic
 import 'package:flutter_complete_project/features/auth/register/ui/logic/register_cubit.dart';
 import 'package:flutter_complete_project/features/inbox/ui/new_message/logic/new_message_cubit.dart';
 import 'package:flutter_complete_project/features/main/ui/logic/main_cubit.dart';
+import 'package:flutter_complete_project/features/profile/data/repos/profile_repo.dart';
+import 'package:flutter_complete_project/features/profile/data/repos/profile_repo_imp.dart';
+import 'package:flutter_complete_project/features/profile/data/services/profile_api_service.dart';
+import 'package:flutter_complete_project/features/profile/ui/logic/profile_cubit.dart';
 import 'package:flutter_complete_project/features/search/data/repos/search_repo.dart';
 import 'package:flutter_complete_project/features/search/data/repos/search_repo_imp.dart';
 import 'package:flutter_complete_project/features/search/data/services/search_api_service.dart';
@@ -136,5 +140,14 @@ Future<void> setupDI() async {
   );
   sl.registerFactory<AppointmentsCubit>(
     () => AppointmentsCubit(appointmentsRepo: sl<AppointmentsRepo>()),
+  );
+
+  // == Profile Feature ==
+  sl.registerLazySingleton<ProfileApiService>(() => ProfileApiService(dio));
+  sl.registerLazySingleton<ProfileRepo>(
+    () => ProfileRepoImp(profileApiService: sl<ProfileApiService>()),
+  );
+  sl.registerFactory<ProfileCubit>(
+    () => ProfileCubit(profileRepo: sl<ProfileRepo>()),
   );
 }
