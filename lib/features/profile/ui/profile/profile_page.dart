@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_complete_project/core/models/user_model.dart';
 import 'package:flutter_complete_project/core/routing/routes.dart';
 import 'package:flutter_complete_project/core/theming/colors.dart';
 import 'package:flutter_complete_project/core/theming/styles.dart';
@@ -103,25 +104,44 @@ class ProfilePage extends StatelessWidget {
                         padding: EdgeInsets.symmetric(horizontal: 24.w),
                         child: Column(
                           children: [
-                            ProfileMenuItem(
-                              iconPath: 'assets/svgs/personalcard.svg',
-                              iconBackgroundColor: ColorsManager.surfaceBlue,
-                              title: 'Personal Information',
-                              onTap: () {},
+                            BlocSelector<
+                              ProfileCubit,
+                              ProfileState,
+                              UserModel?
+                            >(
+                              selector: (state) => state.user,
+                              builder: (BuildContext context, state) =>
+                                  ProfileMenuItem(
+                                    iconPath: 'assets/svgs/personalcard.svg',
+                                    iconBackgroundColor:
+                                        ColorsManager.surfaceBlue,
+                                    title: 'Personal Information',
+                                    onTap: () => Navigator.pushNamed(
+                                      context,
+                                      Routes.personalInformationScreen,
+                                      arguments: state,
+                                    ),
+                                  ),
                             ),
                             SizedBox(height: 16.h),
                             ProfileMenuItem(
                               iconPath: 'assets/svgs/directbox-notif.svg',
                               iconBackgroundColor: ColorsManager.surfaceGreen,
                               title: 'My Test & Diagnostic',
-                              onTap: () {},
+                              onTap: () => Navigator.pushNamed(
+                                context,
+                                Routes.medicalRecordScreen,
+                              ),
                             ),
                             SizedBox(height: 16.h),
                             ProfileMenuItem(
                               iconPath: 'assets/svgs/wallet-2.svg',
                               iconBackgroundColor: ColorsManager.surfaceRed,
                               title: 'Payment',
-                              onTap: () {},
+                              onTap: () => Navigator.pushNamed(
+                                context,
+                                Routes.paymentScreen,
+                              ),
                             ),
                           ],
                         ),
@@ -156,25 +176,32 @@ class ProfilePage extends StatelessWidget {
                   Positioned(
                     bottom: 0,
                     right: 0,
-                    child: GestureDetector(
-                      onTap: () => Navigator.pushNamed(
-                        context,
-                        Routes.personalInformationScreen,
-                      ),
-                      child: Container(
-                        padding: EdgeInsets.all(7.w),
-                        decoration: BoxDecoration(
-                          color: ColorsManager.profileLabelBg,
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                            color: Colors.white,
-                            width: 2.w,
+                    child: BlocSelector<ProfileCubit, ProfileState, UserModel?>(
+                      selector: (state) => state.user,
+                      builder: (context, user) => GestureDetector(
+                        onTap: () async {
+                          if (user == null) return;
+                          final result = await Navigator.pushNamed(
+                            context,
+                            Routes.personalInformationScreen,
+                            arguments: user,
+                          );
+                          if (result == true && context.mounted) {
+                            context.read<ProfileCubit>().getUserProfile();
+                          }
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(7.w),
+                          decoration: BoxDecoration(
+                            color: ColorsManager.profileLabelBg,
+                            shape: BoxShape.circle,
+                            border: Border.all(color: Colors.white, width: 2.w),
                           ),
-                        ),
-                        child: SvgPicture.asset(
-                          'assets/svgs/edit-icon.svg',
-                          width: 16.w,
-                          height: 16.h,
+                          child: SvgPicture.asset(
+                            'assets/svgs/edit-icon.svg',
+                            width: 16.w,
+                            height: 16.h,
+                          ),
                         ),
                       ),
                     ),

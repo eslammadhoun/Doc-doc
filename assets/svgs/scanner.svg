@@ -1,0 +1,20 @@
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="24" height="24" fill="#1E1E1E"/>
+<g id="Payment">
+<rect width="375" height="812" transform="translate(-327 -68)" fill="white"/>
+<g id="Navbar">
+<g id="back">
+<rect x="-7.5" y="-7.5" width="39" height="39" rx="9.5" stroke="#EDEDED"/>
+<g id="scanner">
+<g id="vuesax/linear/scanner">
+<g id="scanner_2">
+<path id="Vector" d="M2 9V7C2 4 4 2 7 2H17C20 2 22 4 22 7V9" stroke="#112211" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_2" d="M2 15V17C2 20 4 22 7 22H17C20 22 22 20 22 17V15" stroke="#101010" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_3" d="M2 12H22" stroke="#101010" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</svg>

@@ -14,6 +14,6 @@ GetProfileResponseModel _$GetProfileResponseModelFromJson(
       .toList(),
 );
 
-// Map<String, dynamic> _$GetProfileResponseModelToJson(
-//   GetProfileResponseModel instance,
-// ) => <String, dynamic>{'data': instance.user};
+Map<String, dynamic> _$GetProfileResponseModelToJson(
+  GetProfileResponseModel instance,
+) => <String, dynamic>{'data': instance.user};

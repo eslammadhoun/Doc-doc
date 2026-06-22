@@ -1,12 +1,63 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_complete_project/core/models/user_model.dart';
 import 'package:flutter_complete_project/core/theming/colors.dart';
 import 'package:flutter_complete_project/core/theming/styles.dart';
 import 'package:flutter_complete_project/core/widgets/app_text_button.dart';
+import 'package:flutter_complete_project/features/profile/data/models/update_profile_request_body.dart';
+import 'package:flutter_complete_project/features/profile/ui/personal_information/logic/personal_information_cubit.dart';
+import 'package:flutter_complete_project/features/profile/ui/personal_information/logic/personal_information_state.dart';
+import 'package:flutter_complete_project/features/profile/ui/personal_information/widgets/personal_info_avatar.dart';
+import 'package:flutter_complete_project/features/profile/ui/personal_information/widgets/personal_info_gender_selector.dart';
+import 'package:flutter_complete_project/features/profile/ui/personal_information/widgets/personal_info_navbar.dart';
+import 'package:flutter_complete_project/features/profile/ui/personal_information/widgets/personal_info_phone_field.dart';
+import 'package:flutter_complete_project/features/profile/ui/personal_information/widgets/personal_info_text_field.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
-class PersonalInformationPage extends StatelessWidget {
-  const PersonalInformationPage({super.key});
+class PersonalInformationPage extends StatefulWidget {
+  final UserModel user;
+
+  const PersonalInformationPage({super.key, required this.user});
+
+  @override
+  State<PersonalInformationPage> createState() =>
+      _PersonalInformationPageState();
+}
+
+class _PersonalInformationPageState extends State<PersonalInformationPage> {
+  late final TextEditingController _nameController;
+  late final TextEditingController _emailController;
+  late final TextEditingController _phoneController;
+  late String _selectedGender;
+
+  @override
+  void initState() {
+    super.initState();
+    _nameController = TextEditingController(text: widget.user.name);
+    _emailController = TextEditingController(text: widget.user.email);
+    _phoneController = TextEditingController(text: widget.user.phone);
+    _selectedGender = widget.user.gender.toLowerCase() == 'female'
+        ? 'female'
+        : 'male';
+  }
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _emailController.dispose();
+    _phoneController.dispose();
+    super.dispose();
+  }
+
+  void _onSave() {
+    final body = UpdateProfileRequestBody(
+      name: _nameController.text.trim(),
+      email: _emailController.text.trim(),
+      phone: _phoneController.text.trim(),
+      gender: _selectedGender,
+    );
+    context.read<PersonalInformationCubit>().updateProfile(body);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -15,16 +66,32 @@ class PersonalInformationPage extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            _buildNavbar(context),
+            const PersonalInfoNavbar(),
             Expanded(
               child: SingleChildScrollView(
                 padding: EdgeInsets.symmetric(horizontal: 16.w),
                 child: Column(
                   children: [
                     SizedBox(height: 40.h),
-                    _buildAvatar(),
+                    const PersonalInfoAvatar(),
                     SizedBox(height: 50.h),
-                    _buildFormFields(),
+                    PersonalInfoTextField(
+                      controller: _nameController,
+                      hintText: 'Full Name',
+                    ),
+                    SizedBox(height: 16.h),
+                    PersonalInfoTextField(
+                      controller: _emailController,
+                      hintText: 'Email',
+                    ),
+                    SizedBox(height: 16.h),
+                    PersonalInfoPhoneField(controller: _phoneController),
+                    SizedBox(height: 16.h),
+                    PersonalInfoGenderSelector(
+                      selectedGender: _selectedGender,
+                      onChanged: (value) =>
+                          setState(() => _selectedGender = value),
+                    ),
                     SizedBox(height: 24.h),
                     Text(
                       'When you set up your personal information settings, you should take care to provide accurate information.',
@@ -45,159 +112,50 @@ class PersonalInformationPage extends StatelessWidget {
     );
   }
 
-  Widget _buildNavbar(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          GestureDetector(
-            onTap: () => Navigator.pop(context),
-            child: Container(
-              width: 40.w,
-              height: 40.h,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10.r),
-                border: Border.all(color: ColorsManager.lighterGrey),
-              ),
-              child: Center(
-                child: SvgPicture.asset(
-                  'assets/svgs/Chevron-left.svg',
-                  width: 24.w,
-                  height: 24.h,
-                  colorFilter: const ColorFilter.mode(
-                    ColorsManager.darkBlue,
-                    BlendMode.srcIn,
-                  ),
-                ),
-              ),
-            ),
-          ),
-          Text(
-            'Personal information',
-            style: TextStyles.font18SemiBoldNearBlack,
-          ),
-          SizedBox(width: 40.w, height: 40.h),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildAvatar() {
-    return Center(
-      child: Stack(
-        children: [
-          Container(
-            width: 120.w,
-            height: 120.h,
-            decoration: const BoxDecoration(shape: BoxShape.circle),
-            child: ClipOval(
-              child: Image.asset(
-                'assets/images/profileImage.png',
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-          Positioned(
-            bottom: 0,
-            right: 0,
-            child: Container(
-              padding: EdgeInsets.all(7.w),
-              decoration: BoxDecoration(
-                color: ColorsManager.surfaceGrey,
-                shape: BoxShape.circle,
-                border: Border.all(color: Colors.white, width: 2.w),
-              ),
-              child: SvgPicture.asset(
-                'assets/svgs/edit-profile.svg',
-                width: 16.w,
-                height: 16.h,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildFormFields() {
-    return Column(
-      children: [
-        _buildTextField('Omar Ahmed'),
-        SizedBox(height: 16.h),
-        _buildTextField('omarahmed14@gmail.com'),
-        SizedBox(height: 16.h),
-        _buildTextField('Password', obscure: true),
-        SizedBox(height: 16.h),
-        _buildPhoneField(),
-      ],
-    );
-  }
-
-  Widget _buildTextField(String value, {bool obscure = false}) {
-    return Container(
-      width: double.infinity,
-      padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 17.h),
-      decoration: BoxDecoration(
-        color: ColorsManager.moreLighterGrey,
-        borderRadius: BorderRadius.circular(16.r),
-        border: Border.all(color: ColorsManager.lighterGrey),
-      ),
-      child: Text(
-        obscure ? '••••••••' : value,
-        style: TextStyles.font14MediumDarkBlue,
-      ),
-    );
-  }
-
-  Widget _buildPhoneField() {
-    return Container(
-      width: double.infinity,
-      padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 15.h),
-      decoration: BoxDecoration(
-        color: ColorsManager.moreLighterGrey,
-        borderRadius: BorderRadius.circular(16.r),
-        border: Border.all(color: ColorsManager.lighterGrey),
-      ),
-      child: Row(
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(2.r),
-            child: Image.asset(
-              'assets/images/profileImage.png',
-              width: 24.w,
-              height: 18.h,
-              fit: BoxFit.cover,
-            ),
-          ),
-          SizedBox(width: 4.w),
-          Icon(
-            Icons.keyboard_arrow_down,
-            size: 18.sp,
-            color: ColorsManager.darkBlue,
-          ),
-          SizedBox(width: 8.w),
-          Container(width: 1.w, height: 24.h, color: ColorsManager.lighterGrey),
-          SizedBox(width: 16.w),
-          Expanded(
-            child: Text(
-              '+1 938756 878',
-              style: TextStyles.font14MediumDarkBlue,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
   Widget _buildSaveButton() {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 16.h),
-      child: AppTextButton(
-        buttonText: 'Save',
-        textStyle: TextStyles.font16SemiBold,
-        onPressed: () {},
-      ),
+    return BlocConsumer<PersonalInformationCubit, PersonalInformationState>(
+      listenWhen: (previous, current) =>
+          previous.updateStatus != current.updateStatus,
+      listener: (context, state) {
+        if (state.updateStatus == UpdateProfileStatus.success) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Profile updated successfully'),
+              backgroundColor: Colors.green,
+            ),
+          );
+          Navigator.pop(context, true);
+        } else if (state.updateStatus == UpdateProfileStatus.failure) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(state.updateErrorModel.getAllMessages()),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
+      },
+      buildWhen: (previous, current) =>
+          previous.updateStatus != current.updateStatus,
+      builder: (context, state) {
+        return Padding(
+          padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 16.h),
+          child: AppTextButton(
+            buttonText: 'Save',
+            textStyle: TextStyles.font16SemiBold,
+            onPressed: _onSave,
+            child: state.updateStatus == UpdateProfileStatus.loading
+                ? SizedBox(
+                    width: 24.w,
+                    height: 24.h,
+                    child: const CircularProgressIndicator(
+                      color: Colors.white,
+                      strokeWidth: 2,
+                    ),
+                  )
+                : null,
+          ),
+        );
+      },
     );
   }
 }

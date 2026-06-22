@@ -11,4 +11,5 @@ class GetProfileResponseModel {
 
   factory GetProfileResponseModel.fromJson(Map<String, dynamic> json) =>
       _$GetProfileResponseModelFromJson(json);
+  Map<String, dynamic> toJson() => _$GetProfileResponseModelToJson(this);
 }
