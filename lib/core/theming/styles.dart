@@ -307,4 +307,16 @@ class TextStyles {
     fontWeight: FontWeightHelper.medium,
     color: ColorsManager.placeholderGrey,
   );
+
+  static TextStyle font18SemiBoldWhite = TextStyle(
+    fontSize: 18.sp,
+    fontWeight: FontWeightHelper.semiBold,
+    color: Colors.white,
+  );
+
+  static TextStyle font20SemiBoldNearBlack = TextStyle(
+    fontSize: 20.sp,
+    fontWeight: FontWeightHelper.semiBold,
+    color: ColorsManager.nearBlack,
+  );
 }

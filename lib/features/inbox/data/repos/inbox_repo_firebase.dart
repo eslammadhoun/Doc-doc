@@ -1,5 +1,5 @@
 import 'package:flutter_complete_project/core/networkingv2/api_result.dart';
-import 'package:flutter_complete_project/core/networkingv2/firebaes_error_handler.dart';
+import 'package:flutter_complete_project/core/networkingv2/firebase_error_handler.dart';
 import 'package:flutter_complete_project/features/inbox/data/models/conversation_model.dart';
 import 'package:flutter_complete_project/features/inbox/data/models/message_model.dart';
 import 'package:flutter_complete_project/features/inbox/data/repos/inbox_repo.dart';

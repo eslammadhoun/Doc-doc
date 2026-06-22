@@ -5,7 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class AppTextButton extends StatelessWidget {
   final double? borderRadius;
   final Color? backgroundColor;
-  final double? horizontailPadding;
+  final double? horizontalPadding;
   final double? verticalPadding;
   final double? buttonWidth;
   final double? buttonHeight;
@@ -18,7 +18,7 @@ class AppTextButton extends StatelessWidget {
     super.key,
     this.borderRadius,
     this.backgroundColor,
-    this.horizontailPadding,
+    this.horizontalPadding,
     this.verticalPadding,
     this.buttonWidth,
     this.buttonHeight,
@@ -37,7 +37,7 @@ class AppTextButton extends StatelessWidget {
         ),
         padding: WidgetStateProperty.all(
           EdgeInsets.symmetric(
-            horizontal: horizontailPadding?.w ?? 12.0.w,
+            horizontal: horizontalPadding?.w ?? 12.0.w,
             vertical: verticalPadding?.h ?? 14.0.h,
           ),
         ),

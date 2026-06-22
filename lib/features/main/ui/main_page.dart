@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_complete_project/core/di/dependancy_injection.dart';
+import 'package:flutter_complete_project/core/di/dependency_injection.dart';
 import 'package:flutter_complete_project/features/appointments/ui/logic/appointments_cubit.dart';
 import 'package:flutter_complete_project/features/home/data/repos/home_repo.dart';
 import 'package:flutter_complete_project/features/home/ui/home/home_page.dart';
@@ -11,7 +11,8 @@ import 'package:flutter_complete_project/features/main/ui/logic/main_cubit.dart'
 import 'package:flutter_complete_project/features/main/ui/logic/main_state.dart';
 import 'package:flutter_complete_project/features/main/ui/widgets/bottom_nav_bar.dart';
 import 'package:flutter_complete_project/features/main/ui/widgets/lazy_tab.dart';
-import 'package:flutter_complete_project/features/main/ui/widgets/placeholder_screen.dart';
+import 'package:flutter_complete_project/features/profile/ui/logic/profile_cubit.dart';
+import 'package:flutter_complete_project/features/profile/ui/profile/profile_page.dart';
 import 'package:flutter_complete_project/features/search/ui/logic/search_cubit.dart';
 import 'package:flutter_complete_project/features/search/ui/search_page.dart';
 import 'package:flutter_complete_project/features/appointments/ui/my_appointments_page.dart';
@@ -57,7 +58,14 @@ class MainPage extends StatelessWidget {
                   child: const MyAppointmentsPage(),
                 ),
               ),
-              const PlaceholderScreen(title: 'Profile'),
+              LazyTab(
+                shouldBuild: selectedIndex == 4,
+                builder: (_) => BlocProvider(
+                  create: (BuildContext context) =>
+                      sl<ProfileCubit>()..getUserProfile(),
+                  child: const ProfilePage(),
+                ),
+              ),
             ],
           );
         },

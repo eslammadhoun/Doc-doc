@@ -31,7 +31,7 @@ class LoginCubit extends Cubit<LoginState> {
         DioFactory.setTokenIntoHeadersAfterLogin(token);
         emit(LoginState.success(loginResponse));
       },
-      failure: (dynamic error) => emit(LoginState.error(error)),
+      failure: (error) => emit(LoginState.error(error)),
     );
   }
 

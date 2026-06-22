@@ -30,7 +30,7 @@ class NewMessageCubit extends Cubit<NewMessageState> {
         ];
         emit(NewMessageState.success(allDoctors));
       },
-      failure: (dynamic error) => emit(NewMessageState.error(error)),
+      failure: (error) => emit(NewMessageState.error(error)),
     );
   }
 
@@ -54,7 +54,7 @@ class NewMessageCubit extends Cubit<NewMessageState> {
         }
         emit(NewMessageState.success(doctors));
       },
-      failure: (dynamic error) => emit(NewMessageState.error(error)),
+      failure: (error) => emit(NewMessageState.error(error)),
     );
   }
 

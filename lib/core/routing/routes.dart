@@ -10,4 +10,11 @@ class Routes {
   static const String doctorsScreen = '/doctorsScreen';
   static const String doctorDetailsScreen = '/doctorDetailsScreen';
   static const String chatThreadScreen = '/chatThreadScreen';
+  static const String settingsScreen = '/settingsScreen';
+  static const String notificationSettingsScreen = '/notificationSettingsScreen';
+  static const String faqScreen = '/faqScreen';
+  static const String securityScreen = '/securityScreen';
+  static const String personalInformationScreen = '/personalInformationScreen';
+  static const String medicalRecordScreen = '/medicalRecordScreen';
+  static const String paymentScreen = '/paymentScreen';
 }

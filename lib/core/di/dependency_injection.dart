@@ -8,26 +8,40 @@ import 'package:flutter_complete_project/features/appointments/data/repos/appoin
 import 'package:flutter_complete_project/features/appointments/data/services/appointments_api_service.dart';
 import 'package:flutter_complete_project/features/appointments/ui/logic/appointments_cubit.dart';
 import 'package:flutter_complete_project/features/home/data/repos/book_appointment_repo.dart';
+import 'package:flutter_complete_project/features/home/data/repos/book_appointment_repo_imp.dart';
+import 'package:flutter_complete_project/features/inbox/data/models/conversation_model.dart';
 import 'package:flutter_complete_project/features/inbox/data/repos/inbox_repo.dart';
+import 'package:flutter_complete_project/features/inbox/ui/conversation/logic/conversation_cubit.dart';
 import 'package:flutter_complete_project/features/inbox/data/repos/inbox_repo_firebase.dart';
 import 'package:flutter_complete_project/features/inbox/data/services/inbox_firebase.dart';
 import 'package:flutter_complete_project/features/inbox/ui/inbox/logic/inbox_cubit.dart';
 import 'package:flutter_complete_project/features/home/data/apis/home_api_service.dart';
 import 'package:flutter_complete_project/features/home/data/repos/home_repo.dart';
+import 'package:flutter_complete_project/features/home/data/repos/home_repo_imp.dart';
 import 'package:flutter_complete_project/features/home/data/repos/nearby_doctors_repo.dart';
+import 'package:flutter_complete_project/features/home/data/repos/nearby_doctors_repo_imp.dart';
 import 'package:flutter_complete_project/features/home/ui/home/logic/home_cubit.dart';
 import 'package:flutter_complete_project/features/home/ui/nearby_doctors/logic/nearby_doctors_cubit.dart';
 import 'package:flutter_complete_project/features/home/data/repos/specializations_repo.dart';
+import 'package:flutter_complete_project/features/home/data/repos/specializations_repo_imp.dart';
 import 'package:flutter_complete_project/features/home/ui/specializations/logic/specializations_cubit.dart';
 import 'package:flutter_complete_project/features/home/data/repos/doctors_repo.dart';
+import 'package:flutter_complete_project/features/home/data/repos/doctors_repo_imp.dart';
 import 'package:flutter_complete_project/features/home/ui/doctors/logic/doctors_cubit.dart';
 import 'package:flutter_complete_project/features/auth/login/data/repos/login_repo.dart';
+import 'package:flutter_complete_project/features/auth/login/data/repos/login_repo_imp.dart';
 import 'package:flutter_complete_project/features/auth/login/ui/logic/login_cubit.dart';
 import 'package:flutter_complete_project/features/auth/register/data/repos/register_repo.dart';
+import 'package:flutter_complete_project/features/auth/register/data/repos/register_repo_imp.dart';
 import 'package:flutter_complete_project/features/home/ui/book_appointment/logic/book_appointment_cubit.dart';
 import 'package:flutter_complete_project/features/auth/register/ui/logic/register_cubit.dart';
 import 'package:flutter_complete_project/features/inbox/ui/new_message/logic/new_message_cubit.dart';
 import 'package:flutter_complete_project/features/main/ui/logic/main_cubit.dart';
+import 'package:flutter_complete_project/features/profile/data/repos/profile_repo.dart';
+import 'package:flutter_complete_project/features/profile/data/repos/profile_repo_imp.dart';
+import 'package:flutter_complete_project/features/profile/data/services/profile_api_service.dart';
+import 'package:flutter_complete_project/features/profile/ui/logic/profile_cubit.dart';
+import 'package:flutter_complete_project/features/profile/ui/personal_information/logic/personal_information_cubit.dart';
 import 'package:flutter_complete_project/features/search/data/repos/search_repo.dart';
 import 'package:flutter_complete_project/features/search/data/repos/search_repo_imp.dart';
 import 'package:flutter_complete_project/features/search/data/services/search_api_service.dart';
@@ -42,11 +56,11 @@ Future<void> setupDI() async {
   sl.registerLazySingleton<ApiService>(() => ApiService(dio));
 
   // Login Feature
-  sl.registerLazySingleton<LoginRepo>(() => LoginRepo(sl<ApiService>()));
+  sl.registerLazySingleton<LoginRepo>(() => LoginRepoImp(sl<ApiService>()));
   sl.registerFactory<LoginCubit>(() => LoginCubit(loginRepo: sl<LoginRepo>()));
 
   // Register Feature
-  sl.registerLazySingleton<RegisterRepo>(() => RegisterRepo(sl<ApiService>()));
+  sl.registerLazySingleton<RegisterRepo>(() => RegisterRepoImp(sl<ApiService>()));
   sl.registerFactory<RegisterCubit>(
     () => RegisterCubit(registerRepo: sl<RegisterRepo>()),
   );
@@ -54,13 +68,13 @@ Future<void> setupDI() async {
   // Home Feature
   sl.registerLazySingleton<HomeApiService>(() => HomeApiService(dio));
   sl.registerLazySingleton<HomeRepo>(
-    () => HomeRepo(homeApiService: sl<HomeApiService>()),
+    () => HomeRepoImp(homeApiService: sl<HomeApiService>()),
   );
   sl.registerFactory<HomeCubit>(() => HomeCubit(homeRepo: sl<HomeRepo>()));
 
   // Nearby Doctors Feature
   sl.registerLazySingleton<NearbyDoctorsRepo>(
-    () => NearbyDoctorsRepo(homeApiService: sl<HomeApiService>()),
+    () => NearbyDoctorsRepoImp(homeApiService: sl<HomeApiService>()),
   );
   sl.registerFactory<NearbyDoctorsCubit>(
     () => NearbyDoctorsCubit(nearbyDoctorsRepo: sl<NearbyDoctorsRepo>()),
@@ -68,7 +82,7 @@ Future<void> setupDI() async {
 
   // Specializations Feature
   sl.registerLazySingleton<SpecializationsRepo>(
-    () => SpecializationsRepo(homeApiService: sl<HomeApiService>()),
+    () => SpecializationsRepoImp(homeApiService: sl<HomeApiService>()),
   );
   sl.registerFactory<SpecializationsCubit>(
     () => SpecializationsCubit(specializationsRepo: sl<SpecializationsRepo>()),
@@ -76,7 +90,7 @@ Future<void> setupDI() async {
 
   // Doctors Screen
   sl.registerLazySingleton<DoctorsRepo>(
-    () => DoctorsRepo(homeApiService: sl<HomeApiService>()),
+    () => DoctorsRepoImp(homeApiService: sl<HomeApiService>()),
   );
   sl.registerFactoryParam<DoctorsCubit, int?, void>(
     (specializationId, _) => DoctorsCubit(
@@ -86,7 +100,7 @@ Future<void> setupDI() async {
   );
 
   sl.registerLazySingleton<BookAppointmentRepo>(
-    () => BookAppointmentRepo(homeApiService: sl<HomeApiService>()),
+    () => BookAppointmentRepoImp(homeApiService: sl<HomeApiService>()),
   );
 
   // Book Appointment Feature
@@ -110,6 +124,18 @@ Future<void> setupDI() async {
     () => InboxRepoFirebase(inboxFirebaseDatasource: sl<InboxFirebase>()),
   );
   sl.registerFactory<InboxCubit>(() => InboxCubit(inboxRepo: sl<InboxRepo>()));
+
+  // Conversation Screen
+  sl.registerFactoryParam<ConversationCubit, Map<String, dynamic>, void>(
+    (args, _) => ConversationCubit(
+      inboxRepo: sl<InboxRepo>(),
+      currentUserId: args['currentUserId'] as String,
+      conversationId: args['conversationId'] as String,
+      receiverId: args['receiverId'] as String,
+      senderInfo: args['senderInfo'] as ParticipantInfo,
+      receiverInfo: args['receiverInfo'] as ParticipantInfo,
+    ),
+  );
 
   // == New Message Page ==
   sl.registerFactory<NewMessageCubit>(
@@ -136,5 +162,17 @@ Future<void> setupDI() async {
   );
   sl.registerFactory<AppointmentsCubit>(
     () => AppointmentsCubit(appointmentsRepo: sl<AppointmentsRepo>()),
+  );
+
+  // == Profile Feature ==
+  sl.registerLazySingleton<ProfileApiService>(() => ProfileApiService(dio));
+  sl.registerLazySingleton<ProfileRepo>(
+    () => ProfileRepoImp(profileApiService: sl<ProfileApiService>()),
+  );
+  sl.registerFactory<ProfileCubit>(
+    () => ProfileCubit(profileRepo: sl<ProfileRepo>()),
+  );
+  sl.registerFactory<PersonalInformationCubit>(
+    () => PersonalInformationCubit(profileRepo: sl<ProfileRepo>()),
   );
 }

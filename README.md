@@ -6,32 +6,87 @@ Built with **Clean Architecture**, **BLoC/Cubit** state management, **Retrofit +
 
 ---
 
-## Screenshots
+## 📸 Application Screenshots
 
-<table>
-  <tr>
-    <td align="center"><img src="screenshots/onboarding.png" width="220" /><br/><b>Onboarding</b></td>
-    <td align="center"><img src="screenshots/login.png" width="220" /><br/><b>Login</b></td>
-    <td align="center"><img src="screenshots/register.png" width="220" /><br/><b>Register</b></td>
-  </tr>
-  <tr>
-    <td align="center"><img src="screenshots/home.png" width="220" /><br/><b>Home</b></td>
-    <td align="center"><img src="screenshots/specializations.png" width="220" /><br/><b>Specializations</b></td>
-    <td align="center"><img src="screenshots/doctors.png" width="220" /><br/><b>Doctors List</b></td>
-  </tr>
-  <tr>
-    <td align="center"><img src="screenshots/doctor_details.png" width="220" /><br/><b>Doctor Details</b></td>
-    <td align="center"><img src="screenshots/book_appointment.png" width="220" /><br/><b>Book Appointment</b></td>
-    <td align="center"><img src="screenshots/nearby_doctors.png" width="220" /><br/><b>Nearby Doctors</b></td>
-  </tr>
-  <tr>
-    <td align="center"><img src="screenshots/inbox.png" width="220" /><br/><b>Inbox</b></td>
-    <td align="center"><img src="screenshots/chat_thread.png" width="220" /><br/><b>Chat Thread</b></td>
-    <td align="center"><img src="screenshots/notifications.png" width="220" /><br/><b>Notifications</b></td>
-  </tr>
-</table>
+### 🚀 Onboarding & Authentication
 
-> Add your screenshots to a `screenshots/` folder at the project root before publishing.
+| Splash                                          | Onboarding                                          | Login                                          | Register                                          |
+| ----------------------------------------------- | --------------------------------------------------- | ---------------------------------------------- | ------------------------------------------------- |
+| <img src="screenshots/splash.png" width="220"/> | <img src="screenshots/onBoarding.png" width="220"/> | <img src="screenshots/login.png" width="220"/> | <img src="screenshots/register.png" width="220"/> |
+| **Splash Screen**                               | **Onboarding**                                      | **Login**                                      | **Register**                                      |
+
+---
+
+### 🏠 Home & Discovery
+
+| Home                                          | Find Doctors                                         | Specialties                                          | Doctors List                                     |
+| --------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- | ------------------------------------------------ |
+| <img src="screenshots/home.png" width="220"/> | <img src="screenshots/findDoctors.png" width="220"/> | <img src="screenshots/specialites.png" width="220"/> | <img src="screenshots/doctors.png" width="220"/> |
+| **Home**                                      | **Find Doctors**                                     | **Specialties**                                      | **Doctors List**                                 |
+
+| Search                                           | Filter Doctors                                         |
+| ------------------------------------------------ | ------------------------------------------------------ |
+| <img src="screenshots/seearch.png" width="220"/> | <img src="screenshots/filterDoctors.png" width="220"/> |
+| **Search**                                       | **Filter Doctors**                                     |
+
+---
+
+### 👨‍⚕️ Doctor Details
+
+| Doctor Details                                         | Reviews                                                        | Location                                                        |
+| ------------------------------------------------------ | -------------------------------------------------------------- | --------------------------------------------------------------- |
+| <img src="screenshots/doctorDetails.png" width="220"/> | <img src="screenshots/doctorDetails-Reviews.png" width="220"/> | <img src="screenshots/doctorDetails-Location.png" width="220"/> |
+| **Overview**                                           | **Reviews**                                                    | **Location**                                                    |
+
+---
+
+### 📅 Appointment Booking
+
+| Appointment Booking                                      | Appointment Summary                                              | Payment                                                          | Success                                                         |
+| -------------------------------------------------------- | ---------------------------------------------------------------- | ---------------------------------------------------------------- | --------------------------------------------------------------- |
+| <img src="screenshots/bookAppointment.png" width="220"/> | <img src="screenshots/bookAppointment-Summery.png" width="220"/> | <img src="screenshots/bookAppointment-payment.png" width="220"/> | <img src="screenshots/bookAppointmentSuccess.png" width="220"/> |
+| **Select Time**                                          | **Summary**                                                      | **Payment**                                                      | **Success**                                                     |
+
+---
+
+### 💬 Messaging & Notifications
+
+| Inbox                                          | Chat Conversation                                         | Appointments                                          |
+| ---------------------------------------------- | --------------------------------------------------------- | ------------------------------------------------------ |
+| <img src="screenshots/inbox.png" width="220"/> | <img src="screenshots/chatConversation.png" width="220"/> | <img src="screenshots/appointments.png" width="220"/> |
+| **Inbox**                                      | **Chat Conversation**                                     | **Appointments List**                                      |
+
+---
+
+### 🩺 Medical Records & Payments
+
+| Medical Records                                        | Payments                                          |
+| ------------------------------------------------------ | ------------------------------------------------- |
+| <img src="screenshots/medicalRecord.png" width="220"/> | <img src="screenshots/payments.png" width="220"/> |
+| **Medical Records**                                    | **Payments**                                      |
+
+---
+
+### 👤 Profile Management
+
+| Profile                                          | Edit Profile                                         |
+| ------------------------------------------------ | ---------------------------------------------------- |
+| <img src="screenshots/profile.png" width="220"/> | <img src="screenshots/editProfile.png" width="220"/> |
+| **Profile**                                      | **Edit Profile**                                     |
+
+---
+
+### ⚙️ Settings & Security
+
+| Settings                                          | Security                                          | Notification Settings                                          | FAQs                                          |
+| ------------------------------------------------- | ------------------------------------------------- | -------------------------------------------------------------- | --------------------------------------------- |
+| <img src="screenshots/settings.png" width="220"/> | <img src="screenshots/security.png" width="220"/> | <img src="screenshots/notification_settings.png" width="220"/> | <img src="screenshots/faqs.png" width="220"/> |
+| **Settings**                                      | **Security**                                      | **Notification Settings**                                      | **FAQs**                                      |
+
+| Logout                                          |
+| ----------------------------------------------- |
+| <img src="screenshots/logout.png" width="220"/> |
+| **Logout**                                      |
 
 ---
 

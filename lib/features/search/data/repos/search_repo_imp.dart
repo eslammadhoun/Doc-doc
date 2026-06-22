@@ -31,7 +31,7 @@ class SearchRepoImp implements SearchRepo {
       );
       return ApiResult.success(recentSearches ?? []);
     } catch (error) {
-      return ApiResult.failure(error);
+      return ApiResult.failure(ErrorHandler.handle(error));
     }
   }
 
