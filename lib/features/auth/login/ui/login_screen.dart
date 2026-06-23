@@ -8,6 +8,7 @@ import 'package:flutter_complete_project/core/theming/styles.dart';
 import 'package:flutter_complete_project/core/widgets/app_text_button.dart';
 import 'package:flutter_complete_project/features/auth/login/data/models/login_request_body.dart';
 import 'package:flutter_complete_project/features/auth/login/ui/logic/login_cubit.dart';
+import 'package:flutter_complete_project/features/auth/login/ui/logic/login_state.dart';
 import 'package:flutter_complete_project/features/auth/login/ui/widgets/email_and_password.dart';
 import 'package:flutter_complete_project/features/auth/login/ui/widgets/login_bloc_listener.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -50,10 +51,22 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                     verticalSpace(40),
-                    AppTextButton(
-                      buttonText: 'Login',
-                      textStyle: TextStyles.font16SemiBold,
-                      onPressed: () => validateThenLogin(context),
+                    BlocBuilder<LoginCubit, LoginState>(
+                      buildWhen: (previous, current) =>
+                          current is Loading || previous is Loading,
+                      builder: (context, state) {
+                        final bool isLoading = state is Loading;
+                        return AppTextButton(
+                          buttonText: 'Login',
+                          textStyle: TextStyles.font16SemiBold,
+                          backgroundColor: isLoading
+                              ? ColorsManager.mainBlue.withValues(alpha: 0.5)
+                              : null,
+                          onPressed: isLoading
+                              ? () {}
+                              : () => validateThenLogin(context),
+                        );
+                      },
                     ),
                     verticalSpace(24),
                     RichText(
